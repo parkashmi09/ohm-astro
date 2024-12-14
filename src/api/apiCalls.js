@@ -36,6 +36,7 @@ export const fetchBlogs = async ({ limit = 10, page = 1 }) => {
 export const fetchTopRatedAstrologers = async () => {
   const response = await axiosInstance.get(endpoints.getTopRatedAstrologers);
   return response.data; // Ensure this matches the API response structure
+
 };
 
 
