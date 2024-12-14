@@ -1,0 +1,408 @@
+
+
+import { useState } from 'react';
+import { X } from 'lucide-react';
+import GemstoneShowcas from './GemstoneShowcas';
+import GemstonesFAQ from './GemstonesFAQ';
+import { useSelector } from 'react-redux';
+import translations from '../../components/translations/translations';
+import { useQuery } from "@tanstack/react-query";
+import { fetchGemstones } from "../../api/apiCalls";
+// Product data
+// const products = [
+//   {
+//     id: 1,
+//     name: "Blue Sapphire 7.07 carat",
+//     origin: "Sri Lanka(Ceylon)",
+//     weight: "7.070 Carat/ 7.750 Ratti",
+//     price: "466620",
+//     image: "https://cdn.anytimeastro.com/anytimeastro/store/prodimg/live/thumb/1/SA204164065/SA204164065_main.jpg"
+//   },
+//   {
+//     id: 2,
+//     name: "Natural Blue Sapphire",
+//     origin: "SRI LANKA(CYLON)",
+//     weight: "5.400 Carat/ 5.920 Ratti",
+//     price: "432000",
+//     image: "https://cdn.anytimeastro.com/anytimeastro/store/prodimg/live/thumb/1/G174937833/G174937833_main.jpg"
+//   },
+//   {
+//     id: 3,
+//     name: "Blue Sapphire 2.98 carat",
+//     origin: "Sri Lanka(Ceylon)",
+//     weight: "2.980 Carat/ 3.270 Ratti",
+//     price: "357600",
+//     image: "https://cdn.anytimeastro.com/anytimeastro/store/prodimg/live/thumb/1/SA204164065/SA204164065_main.jpg"
+//   },
+//   {
+//     id: 4,
+//     name: "Blue Sapphire",
+//     origin: "Sri Lanka(Ceylon)",
+//     weight: "9.810 Carat/ 10.780 Ratti",
+//     price: "353160",
+//     image: "https://cdn.anytimeastro.com/anytimeastro/store/prodimg/live/thumb/1/G174937833/G174937833_main.jpg"
+//   },
+//   {
+//     id: 5,
+//     name: "Blue Sapphire 11.20 carat",
+//     origin: "Sri Lanka(Ceylon)",
+//     weight: "11.200 Carat/ 12.290 Ratti",
+//     price: "336000",
+//     image: "https://cdn.anytimeastro.com/anytimeastro/store/prodimg/live/thumb/1/SA204164065/SA204164065_main.jpg"
+//   }
+// ];
+
+// Form Modal Component
+const ProductInquiryModal = ({ isOpen, onClose, product }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    mobile: '',
+    email: '',
+    address: '',
+    message: ''
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.mobile.trim()) {
+      newErrors.mobile = 'Mobile number is required';
+    } else if (!/^\d{10}$/.test(formData.mobile)) {
+      newErrors.mobile = 'Enter valid 10-digit mobile number';
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Enter valid email address';
+    }
+    if (!formData.address.trim()) newErrors.address = 'Address is required';
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = validate();
+    if (Object.keys(newErrors).length === 0) {
+      // Handle form submission
+      console.log('Form submitted:', formData);
+      alert('Thank you for your inquiry. We will contact you shortly!');
+      onClose();
+    } else {
+      setErrors(newErrors);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg w-full max-w-xl relative max-h-[80vh] overflow-y-auto">
+        <button 
+          onClick={onClose}
+          className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
+        >
+          <X className="w-6 h-6" />
+        </button>
+
+        <div className="p-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Product Inquiry</h2>
+          
+          {/* Product Summary */}
+          <div className="flex gap-4 mb-6 p-4 bg-gradient-to-r from-amber-200 to-yellow-500 rounded-lg">
+            <img
+              src={product.images[0]}
+              alt={product.name}
+              className="w-24 h-24 object-contain rounded-lg"
+            />
+            <div>
+              <h3 className="font-semibold">{product.name}</h3>
+              <p className="text-sm text-gray-600">{product.additionalInfo.origin}</p>
+              <p className="text-sm text-gray-600">{product.additionalInfo.weightInGrams} Grames/ <span>{product.additionalInfo.weightInRatti} Ratti</span></p>
+              <p className="text-sm text-gray-600">{product.additionalInfo.carat} carat</p>
+              <p className="text-red-500 font-semibold">
+                ₹ {Number(product.price).toLocaleString()}
+              </p>
+            </div>
+          </div>
+
+          {/* Inquiry Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Full Name *
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none ${
+                  errors.name ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="Enter your full name"
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Mobile Number *
+              </label>
+              <input
+                type="tel"
+                name="mobile"
+                value={formData.mobile}
+                onChange={handleChange}
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none ${
+                  errors.mobile ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="Enter your mobile number"
+              />
+              {errors.mobile && (
+                <p className="text-red-500 text-sm mt-1">{errors.mobile}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Email Address *
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none ${
+                  errors.email ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="Enter your email address"
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Delivery Address *
+              </label>
+              <textarea
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                rows="3"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none ${
+                  errors.address ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="Enter your delivery address"
+              />
+              {errors.address && (
+                <p className="text-red-500 text-sm mt-1">{errors.address}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Additional Message
+              </label>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                rows="3"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                placeholder="Any additional information or questions?"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors"
+            >
+              Submit Inquiry
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Updated Product Card Component
+
+import { Heart, ShoppingCart, Star } from 'lucide-react';
+
+const ProductCard = ({ product }) => {
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <>
+      <div 
+        className="relative bg-white w-[250px] rounded-2xl border border-gray-200 shadow-2xl overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-3xl group"
+      >
+        {/* Wishlist Icon */}
+       
+
+        {/* Product Image */}
+        <div 
+          className="relative overflow-hidden"
+          onClick={() => setIsModalOpen(true)}
+        >
+          <img
+            src={product.images[0]}
+            alt={product.name}
+            className="w-full h-64 object-contain rounded-2xl  transition-transform duration-300 group-hover:scale-105 p-2"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        </div>
+
+        {/* Product Details */}
+        <div 
+          className="p-5 space-y-2 cursor-pointer"
+          onClick={() => setIsModalOpen(true)}
+        >
+          <div className="flex justify-between items-center">
+            <h3 className="text-xl font-bold text-gray-900 truncate max-w-[70%]">
+              {product.name}
+            </h3>
+            <div className="flex items-center text-yellow-500">
+            <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsWishlisted(!isWishlisted);
+          }}
+          className=" top-4 right-4 z-10 bg-white/80 rounded-full p-2 hover:bg-white transition-colors"
+        >
+          <Heart 
+            className={`w-6 h-6 ${
+              isWishlisted 
+                ? 'fill-red-500 text-red-500' 
+                : 'text-gray-500 hover:text-red-500'
+            }`}
+          />
+        </button>
+            </div>
+          </div>
+
+          <div className="text-sm text-gray-600 space-y-1">
+            <p>Origin: {product.additionalInfo.origin}</p>
+            <div className="flex justify-between">
+              <span>{product.additionalInfo.weightInGrams} Grams</span>
+              <span>{product.additionalInfo.weightInRatti} Ratti</span>
+            </div>
+            <p>{product.additionalInfo.carat} Carat</p>
+          </div>
+
+          <div className="flex justify-between items-center mt-4">
+            <p className="text-2xl font-bold text-red-600">
+              ₹ {Number(product.price).toLocaleString()}
+            </p>
+            {/* <button 
+              className="bg-blue-600 text-white px-4 py-2 rounded-full flex items-center hover:bg-blue-700 transition-colors"
+              onClick={(e) => {
+                e.stopPropagation();
+                // Add to cart logic
+              }}
+            >
+              <ShoppingCart className="w-5 h-5 mr-2" />
+              Add to Cart
+            </button> */}
+          </div>
+        </div>
+      </div>
+
+      <ProductInquiryModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        product={product}
+      />
+    </>
+  );
+};
+
+
+// Hero Banner Component
+const HeroBanner = () => {
+  const language = useSelector((state) => state.language.language);
+  const t = translations[language];
+  return (
+    <div className="relative w-full h-[300px] bg-[url('/api/placeholder/1920/300')] bg-cover bg-center">
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-900/80 to-transparent">
+        <div className="max-w-6xl mx-auto px-4 h-full flex flex-col justify-center">
+          <p className="text-yellow-400 font-semibold mb-2">
+            {t.GenuineProducts}
+          </p>
+          <h1 className="text-white text-4xl font-bold max-w-md leading-tight">
+            {t.GemstonesShop}
+          </h1>
+          <button className="mt-6 bg-yellow-400 text-black px-8 py-3 rounded-full font-semibold hover:bg-yellow-300 transition-colors w-fit">
+            {t.ShopNow}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Best Sellers Section Component
+const BestSellers = () => {
+  const language = useSelector((state) => state.language.language);
+  const t = translations[language];
+ 
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["fetchGemstones"], // Query key
+    queryFn: fetchGemstones, // Fetch function
+  });
+
+  console.log("Fetched gemstones data:", data);
+
+  if (isLoading) return <p>Loading gemstones...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+  return (
+    <div className="py-16 px-4 max-w-7xl mx-auto">
+      <h2 className="text-2xl font-bold text-center mb-12">
+        {t.OurBestSellers}
+        <div className="w-16 h-1 bg-red-500 mx-auto mt-2"></div>
+      </h2>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16">
+        {data?.gemstones.map(product => (
+          <ProductCard key={product._id} product={product} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Main Component
+const GemstoneShowcase = () => {
+  return (
+    <div>
+      <HeroBanner />
+      <BestSellers />
+      <GemstoneShowcas/>
+      <GemstonesFAQ/>
+    </div>
+  );
+};
+
+export default GemstoneShowcase;
