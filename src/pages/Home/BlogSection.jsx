@@ -30,17 +30,17 @@ const CustomNextArrow = ({ onClick }) => (
 const BlogSection = () => {
   const language = useSelector((state) => state.language.language);
   const t = translations[language];
-//api acess
-const { data, isLoading, error } = useQuery({
-  queryKey: ['blogs', { limit: 10, page: 1 }], // Query key with params
-  queryFn: () => fetchBlogs({ limit: 10, page: 1 }), // Fetch function
-});
+  //api acess
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['blogs', { limit: 10, page: 1 }], // Query key with params
+    queryFn: () => fetchBlogs({ limit: 10, page: 1 }), // Fetch function
+  });
 
- console.log("this blogsection home data",data);
-//  if (isLoading) return <p>Loading blogs...</p>;
-//   if (error) return <p>Error: {error.message}</p>;
+  console.log("this blogsection home data", data);
+  //  if (isLoading) return <p>Loading blogs...</p>;
+  //   if (error) return <p>Error: {error.message}</p>;
 
- 
+
 
   const blogPosts = [
     {
@@ -116,14 +116,15 @@ const { data, isLoading, error } = useQuery({
                   {/* Badge */}
                   <div className="relative">
                     <img
-                      src={post.profileImage }
+                      src={post.profileImage}
                       alt={post.title}
-                      className="w-full h-1/2 object-contain"
+                      className="w-full h-64 object-contain"
                     />
                   </div>
 
+
                   {/* Content */}
-                  <div className="p-6 text-center">
+                  <div className="p-6 text-center min-h-24">
                     <h3 className="text-xl font-semibold mb-3 line-clamp-2">
                       {post.title}
                     </h3>

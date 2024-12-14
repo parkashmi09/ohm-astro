@@ -27,7 +27,7 @@ const UpcomingPujaSection = () => {
   return (
     <section className="flex items-center justify-center h-[300px] bg-gradient-to-r from-amber-500 to-pink-500 to-red-500 animate-gradient">
       <div className="text-center  p-10 rounded-3xl  backdrop-blur-md">
-        <h1 className="text-4xl font-bold text-white mb-4 animate-bounce">Upcoming Puja</h1>
+        <h1 className="text-4xl font-bold text-white mb-4 ">Upcoming Puja</h1>
         <p className="text-lg text-white/80 mb-6 animate-fade-in">
           Stay tuned! Our upcoming puja schedule will be updated here soon.
         </p>
