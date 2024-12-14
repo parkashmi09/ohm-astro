@@ -1,9 +1,11 @@
 
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchastrologers } from "../api/apiCalls";
+import { useQuery,useMutation } from "@tanstack/react-query";
+import { fetchastrologers,addEnquiry } from "../api/apiCalls";
 import { Star, Phone, X ,Home} from 'lucide-react';
 import { Link } from "react-router-dom";
+// Import addEnquiry function // Replace with the correct icon library import
+import toast, { Toaster } from "react-hot-toast"; // Import toast and Toaster
 
 // Custom Modal Component
 const Modal = ({ isOpen, onClose, children }) => {
@@ -31,110 +33,133 @@ const CallIntakeForm = ({ isOpen, onClose, astrologer }) => {
     maritalStatus: "",
     topicOfConcern: "",
     mobileNumber: "",
-    includePartner: false,
-    partnerDetails: {
-      firstName: "",
-      lastName: "",
-      dateOfBirth: "",
-      timeOfBirth: "",
-      placeOfBirth: "",
-      gender: ""
-    }
+    type:"call",
+  });
+
+  // Mutation for adding enquiry
+  const mutation = useMutation({
+    mutationFn: addEnquiry, // Function to execute
+    onSuccess: (data) => {
+      toast.success("Enquiry submitted successfully!", { duration: 3000 });
+      console.log("Enquiry added successfully:", data);
+      onClose(); // Close the modal on success
+    },
+    onError: (error) => {
+      toast.error("There was an error submitting the enquiry. Please try again.", {
+        duration: 4000,
+      });
+      console.error("Error submitting enquiry:", error);
+    },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    onClose();
+
+    // Validate required fields
+    if (
+      !formData.firstName ||
+      !formData.gender ||
+      !formData.dateOfBirth ||
+      !formData.placeOfBirth ||
+      !formData.maritalStatus ||
+      !formData.mobileNumber
+    ) {
+      toast.error("Please fill in all required fields.", { duration: 3000 });
+      return;
+    }
+
+    // Trigger the mutation
+    mutation.mutate({
+      ...formData,
+      astrologerId: astrologer?.id, // Include astrologer ID if applicable
+    });
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Call Intake Form</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <X size={24} />
-          </button>
-        </div>
-        
-        <div className="bg-yellow-100 p-4 rounded-lg mb-4">
-          <p>Yay! You are eligible for first 3 min free session</p>
-        </div>
+    <>
+      {/* Toaster Component */}
+      <Toaster position="top-right" reverseOrder={false} />
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">First Name *</label>
-              <input
-                type="text"
-                required
-                className="w-full p-2 border rounded"
-                value={formData.firstName}
-                onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Last Name</label>
-              <input
-                type="text"
-                className="w-full p-2 border rounded"
-                value={formData.lastName}
-                onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-              />
-            </div>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <div className="p-6">
+          {/* Header */}
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold">Call Intake Form</h2>
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+              <X size={24} />
+            </button>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1">Gender *</label>
-            <select 
-              required
-              className="w-full p-2 border rounded"
-              value={formData.gender}
-              onChange={(e) => setFormData({...formData, gender: e.target.value})}
-            >
-              <option value="">--Select--</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
+          {/* Free Session Banner */}
+          <div className="bg-yellow-100 p-4 rounded-lg mb-4">
+            <p>Yay! You are eligible for the first 3-minute free session.</p>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Date of Birth *</label>
-              <input
-                type="date"
-                required
-                className="w-full p-2 border rounded"
-                value={formData.dateOfBirth}
-                onChange={(e) => setFormData({...formData, dateOfBirth: e.target.value})}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Time of Birth *</label>
-              <input
-                type="time"
-                required
-                className="w-full p-2 border rounded"
-                value={formData.timeOfBirth}
-                onChange={(e) => setFormData({...formData, timeOfBirth: e.target.value})}
-              />
-              <div className="mt-1">
-                <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox"
-                    checked={!formData.timeOfBirth}
-                    onChange={(e) => setFormData({...formData, timeOfBirth: e.target.checked ? "" : formData.timeOfBirth})}
-                  />
-                  <span className="ml-2 text-sm">I Don't Know</span>
-                </label>
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* First Name and Last Name */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">First Name *</label>
+                <input
+                  type="text"
+                  required
+                  className="w-full p-2 border rounded"
+                  value={formData.firstName}
+                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Last Name</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded"
+                  value={formData.lastName}
+                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                />
               </div>
             </div>
-          </div>
 
-          <div className="grid grid-cols-2 gap-4">
+            {/* Gender */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Gender *</label>
+              <select
+                required
+                className="w-full p-2 border rounded"
+                value={formData.gender}
+                onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+              >
+                <option value="">--Select--</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            {/* Date of Birth and Time of Birth */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Date of Birth *</label>
+                <input
+                  type="date"
+                  required
+                  className="w-full p-2 border rounded"
+                  value={formData.dateOfBirth}
+                  onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Time of Birth</label>
+                <input
+                  type="time"
+                  className="w-full p-2 border rounded"
+                  value={formData.timeOfBirth}
+                  onChange={(e) => setFormData({ ...formData, timeOfBirth: e.target.value })}
+                />
+              </div>
+            </div>
+
+            {/* Place of Birth */}
             <div>
               <label className="block text-sm font-medium mb-1">Place of Birth *</label>
               <input
@@ -142,146 +167,60 @@ const CallIntakeForm = ({ isOpen, onClose, astrologer }) => {
                 required
                 className="w-full p-2 border rounded"
                 value={formData.placeOfBirth}
-                onChange={(e) => setFormData({...formData, placeOfBirth: e.target.value})}
+                onChange={(e) => setFormData({ ...formData, placeOfBirth: e.target.value })}
               />
             </div>
+
+            {/* Marital Status */}
             <div>
               <label className="block text-sm font-medium mb-1">Marital Status *</label>
               <select
                 required
                 className="w-full p-2 border rounded"
                 value={formData.maritalStatus}
-                onChange={(e) => setFormData({...formData, maritalStatus: e.target.value})}
+                onChange={(e) => setFormData({ ...formData, maritalStatus: e.target.value })}
               >
                 <option value="">--Select--</option>
                 <option value="single">Single</option>
                 <option value="married">Married</option>
                 <option value="divorced">Divorced</option>
                 <option value="widowed">Widowed</option>
+                <option value="widowed">Separated</option>
               </select>
             </div>
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1">Topic of Concern</label>
-            <select
-              className="w-full p-2 border rounded"
-              value={formData.topicOfConcern}
-              onChange={(e) => setFormData({...formData, topicOfConcern: e.target.value})}
+            {/* Mobile Number */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Mobile Number *</label>
+              <div className="flex">
+                <select className="w-24 p-2 border rounded-l">
+                  <option value="+91">+91</option>
+                  <option value="+1">+1</option>
+                </select>
+                <input
+                  type="tel"
+                  required
+                  className="flex-1 p-2 border rounded-r"
+                  value={formData.mobileNumber}
+                  onChange={(e) => setFormData({ ...formData, mobileNumber: e.target.value })}
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={mutation.isLoading}
+              className={`w-full text-black font-semibold py-2 px-4 rounded ${
+                mutation.isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-yellow-400 hover:bg-yellow-500"
+              }`}
             >
-              <option value="">Select your concern</option>
-              <option value="career">Career & Job</option>
-              <option value="love">Love & Relationship</option>
-              <option value="marriage">Marriage</option>
-              <option value="health">Health</option>
-              <option value="finance">Finance</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">Mobile Number *</label>
-            <div className="flex">
-              <select className="w-24 p-2 border rounded-l">
-                <option value="+91">+91</option>
-                <option value="+1">+1</option>
-              </select>
-              <input
-                type="tel"
-                required
-                className="flex-1 p-2 border rounded-r"
-                value={formData.mobileNumber}
-                onChange={(e) => setFormData({...formData, mobileNumber: e.target.value})}
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox"
-                checked={formData.includePartner}
-                onChange={(e) => setFormData({...formData, includePartner: e.target.checked})}
-              />
-              <span className="ml-2">Enter Partner's Details</span>
-            </label>
-          </div>
-
-          {formData.includePartner && (
-            <div className="space-y-4 border-t pt-4 mt-4">
-              <h3 className="font-medium">Partner's Details</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">First Name *</label>
-                  <input
-                    type="text"
-                    required={formData.includePartner}
-                    className="w-full p-2 border rounded"
-                    value={formData.partnerDetails.firstName}
-                    onChange={(e) => setFormData({
-                      ...formData,
-                      partnerDetails: {...formData.partnerDetails, firstName: e.target.value}
-                    })}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Last Name</label>
-                  <input
-                    type="text"
-                    className="w-full p-2 border rounded"
-                    value={formData.partnerDetails.lastName}
-                    onChange={(e) => setFormData({
-                      ...formData,
-                      partnerDetails: {...formData.partnerDetails, lastName: e.target.value}
-                    })}
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Date of Birth *</label>
-                  <input
-                    type="date"
-                    required={formData.includePartner}
-                    className="w-full p-2 border rounded"
-                    value={formData.partnerDetails.dateOfBirth}
-                    onChange={(e) => setFormData({
-                      ...formData,
-                      partnerDetails: {...formData.partnerDetails, dateOfBirth: e.target.value}
-                    })}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Gender *</label>
-                  <select
-                    required={formData.includePartner}
-                    className="w-full p-2 border rounded"
-                    value={formData.partnerDetails.gender}
-                    onChange={(e) => setFormData({
-                      ...formData,
-                      partnerDetails: {...formData.partnerDetails, gender: e.target.value}
-                    })}
-                  >
-                    <option value="">--Select--</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <button
-            type="submit"
-            className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-4 rounded"
-          >
-            Start Call with {astrologer?.name || 'Astrologer'}
-          </button>
-        </form>
-      </div>
-    </Modal>
+              {mutation.isLoading ? "Submitting..." : `Start Call with ${astrologer?.name || "Astrologer"}`}
+            </button>
+          </form>
+        </div>
+      </Modal>
+    </>
   );
 };
 

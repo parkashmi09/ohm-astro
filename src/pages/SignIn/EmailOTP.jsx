@@ -8,6 +8,7 @@ import { Mail, Lock, ArrowRight, RotateCcw } from "lucide-react";
 import { useMutation } from "@tanstack/react-query"; // Import useMutation
 import { requestEmailOTP, verifyOTP } from "../../api/apiCalls"; // Import the functions
 
+
 const EmailOTP = () => {
   const [email, setEmail] = useState("");
   const [otp, setOTP] = useState("");

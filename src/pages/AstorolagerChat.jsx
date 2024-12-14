@@ -1,642 +1,10 @@
-// import  { useState } from "react";
-// import { Search, Star, X } from "lucide-react";
-// import { astrologers } from "../components/content/astordata.js";
 
-// const AstrologerChatModal = ({ isOpen, onClose, astrologer }) => {
-//   if (!isOpen) return null;
-
-//   return (
-//     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-//       <div className="bg-white rounded-lg p-6 w-full max-w-md relative">
-//         <button
-//           onClick={onClose}
-//           className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
-//         >
-//           <X className="w-6 h-6" />
-//         </button>
-
-//         <div className="flex flex-col items-center mb-6">
-//           <img
-//             src={astrologer?.image || "/api/placeholder/80/80"}
-//             alt={astrologer?.name}
-//             className="w-20 h-20 rounded-full mb-2"
-//           />
-//           <h2 className="text-2xl font-bold text-gray-900">
-//             {astrologer?.name || "ASTRO NISHA"}
-//           </h2>
-//         </div>
-
-//         <div className="text-center mb-6">
-//           <p className="text-lg mb-4">Offer of ₹10/min is valid for 5 min(s)</p>
-//           <p className="text-gray-600 mb-6">
-//             The Astrologer will try to answer at least one concern.
-//           </p>
-//         </div>
-
-//         <div className="space-y-4">
-//           <button className="w-full bg-yellow-400 text-black font-semibold py-3 px-4 rounded-lg hover:bg-yellow-500 transition-colors">
-//             Start chat @ ₹10/min
-//           </button>
-
-//           <a
-//             href="#"
-//             className="block text-center text-red-500 hover:text-red-600 underline"
-//           >
-//             Avail unlimited chat @ ₹50/min only!
-//           </a>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// const AstrologerCard = ({ astrologer }) => {
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   return (
-//     <>
-//       <div className="bg-white rounded-lg p-4 shadow-md relative border border-red-500">
-//         {astrologer.dealTag && (
-//           <div className="absolute -right-2 -top-2 bg-green-500 text-white px-2 py-1 rounded text-xs">
-//             Deal
-//           </div>
-//         )}
-//         <div className="flex items-start gap-4">
-//           <div className="p-2 space-y-4">
-//             <div className="relative">
-//               <img
-//                 src={astrologer.image || "/api/placeholder/80/80"}
-//                 alt={astrologer.name}
-//                 className="w-20 h-20 rounded-full object-cover"
-//               />
-//               <div
-//                 className={`absolute bottom-0 right-0 w-3 h-3 rounded-full ${
-//                   astrologer.status === "Online"
-//                     ? "bg-green-500"
-//                     : astrologer.status === "Busy"
-//                     ? "bg-red-500"
-//                     : "bg-gray-500"
-//                 }`}
-//               />
-//             </div>
-//             <div className="text-right">
-//               <div className="flex flex-col items-end gap-1">
-//                 <div className="flex items-center gap-1">
-//                   <div className="flex">
-//                     {[...Array(5)].map((_, i) => (
-//                       <Star
-//                         key={i}
-//                         className={`w-4 h-4 ${
-//                           i < Math.floor(astrologer.rating)
-//                             ? "text-yellow-400 fill-yellow-400"
-//                             : "text-gray-300"
-//                         }`}
-//                       />
-//                     ))}
-//                   </div>
-//                 </div>
-//                 <span className="text-sm text-gray-600">
-//                   Reviews: {astrologer.reviews.toLocaleString()}
-//                 </span>
-//               </div>
-//             </div>
-//           </div>
-
-//           <div className="flex-1">
-//             <h3 className="font-semibold text-lg">{astrologer.name}</h3>
-//             <p className="text-red-500 text-sm">
-//             {astrologer.specializations?.join(", ") || "No specializations listed"}
-//             </p>
-//             <p className="text-gray-600 text-sm">{astrologer.languages}</p>
-//             <p className="text-sm">Exp : {astrologer.experience}</p>
-
-//             <div className="text-sm">
-//               <span className="line-through text-gray-400">
-//                 ₹{astrologer.originalPrice}/Min
-//               </span>
-//               <span className="text-green-600 font-bold ml-1">Free</span>
-//             </div>
-//             <div className="flex justify-end">
-//               <button
-//                 onClick={() =>
-//                   astrologer.status !== "Busy" && setIsModalOpen(true)
-//                 }
-//                 className={`mt-2 px-6 py-1 rounded-full ${
-//                   astrologer.status === "Busy"
-//                     ? "bg-red-500 text-white"
-//                     : "bg-green-500 text-white"
-//                 }`}
-//               >
-//                 {astrologer.status === "Busy" ? "Busy" : "Chat"}
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//         <AstrologerChatModal
-//           isOpen={isModalOpen}
-//           onClose={() => setIsModalOpen(false)}
-//           astrologer={astrologer}
-//         />
-//       </div>
-//     </>
-//   );
-// };
-
-// const AstorolagerChat = () => {
-//   const [searchTerm, setSearchTerm] = useState("");
-//   const [specializationFilter, setSpecializationFilter] = useState("All");
-//   const [sortBy, setSortBy] = useState("All");
-
-//   const specializations = [
-//     "All",
-//     "Marital Life",
-//     "Love & Relationship",
-//     "Career & Job",
-//     "Cheating & Affairs",
-//     "Finance & Business",
-//     "Break-Up & Divorce",
-//     "Vedic Astrology",
-//     "Kids & Education",
-//     "Tarot Reading",
-//     "Horary Astrology",
-//     "Psychic Reading",
-//     "Numerology",
-//     "Palm Reading",
-//     "Relationship Counseling",
-//   ];
-
-//   const sortOptions = [
-//     "Online",
-//     "Newest",
-//     "Oldest",
-//     "Lowest Price",
-//     "Highest Price",
-//     "Highest Rating",
-//     "Highest Review Count",
-//   ];
-
-//   const sortAstrologers = (astrologers) => {
-//     switch (sortBy) {
-//       case "Newest":
-//         return [...astrologers].sort(
-//           (a, b) => new Date(b.joinedDate) - new Date(a.joinedDate)
-//         );
-//       case "Oldest":
-//         return [...astrologers].sort(
-//           (a, b) => new Date(a.joinedDate) - new Date(b.joinedDate)
-//         );
-//       case "Lowest Price":
-//         return [...astrologers].sort(
-//           (a, b) => a.originalPrice - b.originalPrice
-//         );
-//       case "Highest Price":
-//         return [...astrologers].sort(
-//           (a, b) => b.originalPrice - a.originalPrice
-//         );
-//       case "Highest Rating":
-//         return [...astrologers].sort((a, b) => b.rating - a.rating);
-//       case "Highest Review Count":
-//         return [...astrologers].sort((a, b) => b.reviews - a.reviews);
-//       default:
-//         return astrologers;
-//     }
-//   };
-
-//   const filteredAstrologers = sortAstrologers(
-//     astrologers.filter((astrologer) => {
-//       const matchesSearch =
-//         astrologer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-//         astrologer.specializations.some((spec) =>
-//           spec.toLowerCase().includes(searchTerm.toLowerCase())
-//         ) ||
-//         astrologer.languages.toLowerCase().includes(searchTerm.toLowerCase());
-
-//       const matchesSpecialization =
-//         specializationFilter === "All" ||
-//         astrologer.specializations.includes(specializationFilter);
-
-//       return matchesSearch && matchesSpecialization;
-//     })
-//   );
-
-//   return (
-//     <div>
-//       <div className="bg-yellow-400  p-6 mb-8 relative overflow-hidden">
-//         <div className="flex items-center justify-between">
-//           <div>
-//             <h1 className="text-3xl font-bold mb-2">
-//               Need guidance for your life problems?
-//             </h1>
-//             <h2 className="text-2xl">Chat to best Astrologers in India</h2>
-//             <div className="bg-white text-black px-4 py-2 rounded-full inline-block mt-4">
-//               First Session FREE
-//             </div>
-//           </div>
-//           <img
-//             src="https://cdn.anytimeastro.com/dashaspeaks/psychics/13ecd392-f1e7-4047-98ce-76600fe99498.png"
-//             alt="Astrologer"
-//             className="w-48 h-48 object-cover rounded-full"
-//           />
-//         </div>
-//       </div>
-
-//       <div className="max-w-6xl mx-auto p-4">
-//         {/* <div className="bg-yellow-400 rounded-lg p-6 mb-8 relative overflow-hidden">
-//           <div className="flex items-center justify-between">
-//             <div>
-//               <h1 className="text-3xl font-bold mb-2">
-//                 Need guidance for your life problems?
-//               </h1>
-//               <h2 className="text-2xl">Talk to best Astrologers in India</h2>
-//               <div className="bg-white text-black px-4 py-2 rounded-full inline-block mt-4">
-//                 First Session FREE
-//               </div>
-//             </div>
-//             <img
-//               src="https://cdn.anytimeastro.com/dashaspeaks/psychics/13ecd392-f1e7-4047-98ce-76600fe99498.png"
-//               alt="Astrologer"
-//               className="w-48 h-48 object-cover rounded-full"
-//             />
-//           </div>
-//         </div> */}
-
-//         <div className="flex flex-wrap gap-4 mb-6">
-//           <p className=" font-bold text-2xl">Chat with Astrologer</p>
-//           <div className="flex-1 relative min-w-[200px]">
-//             <input
-//               type="text"
-//               placeholder="Search Astrologers"
-//               className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-red-500"
-//               value={searchTerm}
-//               onChange={(e) => setSearchTerm(e.target.value)}
-//             />
-//             <Search className="absolute right-3 top-2.5 text-gray-400" />
-//           </div>
-
-//           <select
-//             className="px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-red-500"
-//             value={sortBy}
-//             onChange={(e) => setSortBy(e.target.value)}
-//           >
-//             {sortOptions.map((option) => (
-//               <option key={option} value={option}>
-//                 {option}
-//               </option>
-//             ))}
-//           </select>
-
-//           <select
-//             className="px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-red-500"
-//             value={specializationFilter}
-//             onChange={(e) => setSpecializationFilter(e.target.value)}
-//           >
-//             {specializations.map((spec) => (
-//               <option key={spec} value={spec}>
-//                 {spec}
-//               </option>
-//             ))}
-//           </select>
-//         </div>
-
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-//           {filteredAstrologers.map((astrologer, index) => (
-//             <AstrologerCard key={index} astrologer={astrologer} />
-//           ))}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AstorolagerChat;
-
-// import { useState } from "react";
-// import { astrologeres } from "../components/content/astordata.js";
-// import { Search, Star, X } from "lucide-react";
-
-// import { useQuery } from "@tanstack/react-query";
-// import { fetchastrologers } from "../api/apiCalls";
-// const AstrologerChatModal = ({ isOpen, onClose, astrologer }) => {
-//   if (!isOpen) return null;
-
-//   return (
-//     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-//       <div className="bg-white rounded-lg p-6 w-full max-w-md relative">
-//         <button
-//           onClick={onClose}
-//           className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
-//         >
-//           <X className="w-6 h-6" />
-//         </button>
-
-//         <div className="flex flex-col items-center mb-6">
-//           <img
-//             src={astrologer?.image || "/api/placeholder/80/80"}
-//             alt={astrologer?.name}
-//             className="w-20 h-20 rounded-full mb-2"
-//           />
-//           <h2 className="text-2xl font-bold text-gray-900">
-//             {astrologer?.name || "ASTRO NISHA"}
-//           </h2>
-//         </div>
-
-//         <div className="text-center mb-6">
-//           <p className="text-lg mb-4">Offer of ₹10/min is valid for 5 min(s)</p>
-//           <p className="text-gray-600 mb-6">
-//             The Astrologer will try to answer at least one concern.
-//           </p>
-//         </div>
-
-//         <div className="space-y-4">
-//           <button className="w-full bg-yellow-400 text-black font-semibold py-3 px-4 rounded-lg hover:bg-yellow-500 transition-colors">
-//             Start call @ ₹10/min
-//           </button>
-
-//           <a
-//             href="#"
-//             className="block text-center text-red-500 hover:text-red-600 underline"
-//           >
-//             Avail unlimited call @ ₹30/min only!
-//           </a>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// const AstrologerCard = ({ astrologer }) => {
-
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const { data, isLoading, error } = useQuery({
-//     queryKey: ["blogs", { limit: 10, page: 1 }], // Query key with params
-//     queryFn: () => fetchastrologers({ limit: 10, page: 1 }), // Fetch function
-//   });
-
-//   console.log("this fetchastrologers data", data);
-
-//   if (isLoading) return <p className="text-center w-full">Loading blogs...</p>;
-//   if (error) return <p>Error: {error.message}</p>;
-//   return (
-//     <>
-//       <div className="bg-white rounded-lg p-4 shadow-md relative border border-red-500">
-//         {astrologer.dealTag && (
-//           <div className="absolute -right-2 -top-2 bg-green-500 text-white px-2 py-1 rounded text-xs">
-//             Deal
-//           </div>
-//         )}
-//         <div className="flex items-start gap-4">
-//           <div className="p-2 space-y-4">
-//             <div className="relative">
-//               <img
-//                 src={astrologer.image || "/api/placeholder/80/80"}
-//                 alt={astrologer.name}
-//                 className="w-20 h-20 rounded-full object-cover"
-//               />
-//               <div
-//                 className={`absolute bottom-0 right-0 w-3 h-3 rounded-full ${
-//                   astrologer.status === "Online"
-//                     ? "bg-green-500"
-//                     : astrologer.status === "Busy"
-//                     ? "bg-red-500"
-//                     : "bg-gray-500"
-//                 }`}
-//               />
-//             </div>
-//             <div className="text-right">
-//               <div className="flex flex-col items-end gap-1">
-//                 <div className="flex items-center gap-1">
-//                   <div className="flex">
-//                     {[...Array(5)].map((_, i) => (
-//                       <Star
-//                         key={i}
-//                         className={`w-4 h-4 ${
-//                           i < Math.floor(astrologer.rating)
-//                             ? "text-yellow-400 fill-yellow-400"
-//                             : "text-gray-300"
-//                         }`}
-//                       />
-//                     ))}
-//                   </div>
-//                 </div>
-//                 <span className="text-sm text-gray-600">
-//                   Reviews: {astrologer.reviews.toLocaleString()}
-//                 </span>
-//               </div>
-//             </div>
-//           </div>
-
-//           <div className="flex-1">
-//             <h3 className="font-semibold text-lg">{astrologer.name}</h3>
-//             <p className="text-red-500 text-sm">
-//               {astrologer.specializations.join(", ")}
-//             </p>
-//             <p className="text-gray-600 text-sm">{astrologer.languages}</p>
-//             <p className="text-sm">Exp : {astrologer.experience}</p>
-
-//             <div className="text-sm">
-//               <span className="line-through text-gray-400">
-//                 ₹{astrologer.originalPrice}/Min
-//               </span>
-//               <span className="text-green-600 font-bold ml-1">Free</span>
-//             </div>
-//             <div className="flex justify-end">
-//             <button
-//                 onClick={() =>
-//                   astrologer.status !== "Busy" && setIsModalOpen(true)
-//                 }
-//                 className={`mt-2 px-6 py-1 rounded-full ${
-//                   astrologer.status === "Busy"
-//                     ? "bg-red-500 text-white"
-//                     : "bg-green-500 text-white"
-//                 }`}
-//               >
-//                 {astrologer.status === "Busy" ? "Busy" : "Call"}
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-
-//         <AstrologerChatModal
-//           isOpen={isModalOpen}
-//           onClose={() => setIsModalOpen(false)}
-//           astrologer={astrologer}
-//         />
-//       </div>
-//     </>
-//   );
-// };
-
-// const AstrologerListing = () => {
-//   const [searchTerm, setSearchTerm] = useState("");
-//   const [specializationFilter, setSpecializationFilter] = useState("All");
-//   const [sortBy, setSortBy] = useState("All");
-
-//   const specializations = [
-//     "All",
-//     "Marital Life",
-//     "Love & Relationship",
-//     "Career & Job",
-//     "Cheating & Affairs",
-//     "Finance & Business",
-//     "Break-Up & Divorce",
-//     "Vedic Astrology",
-//     "Kids & Education",
-//     "Tarot Reading",
-//     "Horary Astrology",
-//     "Psychic Reading",
-//     "Numerology",
-//     "Palm Reading",
-//     "Relationship Counseling",
-//   ];
-
-//   const sortOptions = [
-//     "Online",
-//     "Newest",
-//     "Oldest",
-//     "Lowest Price",
-//     "Highest Price",
-//     "Highest Rating",
-//     "Highest Review Count",
-//   ];
-
-//   const sortAstrologers = (astrologers) => {
-//     switch (sortBy) {
-//       case "Newest":
-//         return [...astrologers].sort(
-//           (a, b) => new Date(b.joinedDate) - new Date(a.joinedDate)
-//         );
-//       case "Oldest":
-//         return [...astrologers].sort(
-//           (a, b) => new Date(a.joinedDate) - new Date(b.joinedDate)
-//         );
-//       case "Lowest Price":
-//         return [...astrologers].sort(
-//           (a, b) => a.originalPrice - b.originalPrice
-//         );
-//       case "Highest Price":
-//         return [...astrologers].sort(
-//           (a, b) => b.originalPrice - a.originalPrice
-//         );
-//       case "Highest Rating":
-//         return [...astrologers].sort((a, b) => b.rating - a.rating);
-//       case "Highest Review Count":
-//         return [...astrologers].sort((a, b) => b.reviews - a.reviews);
-//       default:
-//         return astrologers;
-//     }
-//   };
-
-//   const filteredAstrologers = sortAstrologers(
-//     astrologeres.filter((astrologer) => {
-//       const matchesSearch =
-//         astrologer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-//         astrologer.specializations.some((spec) =>
-//           spec.toLowerCase().includes(searchTerm.toLowerCase())
-//         ) ||
-//         astrologer.languages.toLowerCase().includes(searchTerm.toLowerCase());
-
-//       const matchesSpecialization =
-//         specializationFilter === "All" ||
-//         astrologer.specializations.includes(specializationFilter);
-
-//       return matchesSearch && matchesSpecialization;
-//     })
-//   );
-
-//   return (
-//     <div>
-//       <div className="bg-yellow-400  p-6 mb-8 relative overflow-hidden">
-//         <div className="flex items-center justify-between">
-//           <div>
-//             <h1 className="text-3xl font-bold mb-2">
-//               Need guidance for your life problems?
-//             </h1>
-//             <h2 className="text-2xl">Talk to best Astrologers in India</h2>
-//             <div className="bg-white text-black px-4 py-2 rounded-full inline-block mt-4">
-//               First Session FREE
-//             </div>
-//           </div>
-//           <img
-//             src="https://cdn.anytimeastro.com/dashaspeaks/psychics/13ecd392-f1e7-4047-98ce-76600fe99498.png"
-//             alt="Astrologer"
-//             className="w-48 h-48 object-cover rounded-full"
-//           />
-//         </div>
-//       </div>
-
-//       <div className="max-w-6xl mx-auto p-4">
-//         {/* <div className="bg-yellow-400 rounded-lg p-6 mb-8 relative overflow-hidden">
-//           <div className="flex items-center justify-between">
-//             <div>
-//               <h1 className="text-3xl font-bold mb-2">
-//                 Need guidance for your life problems?
-//               </h1>
-//               <h2 className="text-2xl">Talk to best Astrologers in India</h2>
-//               <div className="bg-white text-black px-4 py-2 rounded-full inline-block mt-4">
-//                 First Session FREE
-//               </div>
-//             </div>
-//             <img
-//               src="https://cdn.anytimeastro.com/dashaspeaks/psychics/13ecd392-f1e7-4047-98ce-76600fe99498.png"
-//               alt="Astrologer"
-//               className="w-48 h-48 object-cover rounded-full"
-//             />
-//           </div>
-//         </div> */}
-
-//         <div className="flex flex-wrap gap-4 mb-6">
-//           <div className="flex-1 relative min-w-[200px]">
-//             <input
-//               type="text"
-//               placeholder="Search Astrologers"
-//               className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-red-500"
-//               value={searchTerm}
-//               onChange={(e) => setSearchTerm(e.target.value)}
-//             />
-//             <Search className="absolute right-3 top-2.5 text-gray-400" />
-//           </div>
-
-//           <select
-//             className="px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-red-500"
-//             value={sortBy}
-//             onChange={(e) => setSortBy(e.target.value)}
-//           >
-//             {sortOptions.map((option) => (
-//               <option key={option} value={option}>
-//                 {option}
-//               </option>
-//             ))}
-//           </select>
-
-//           <select
-//             className="px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-red-500"
-//             value={specializationFilter}
-//             onChange={(e) => setSpecializationFilter(e.target.value)}
-//           >
-//             {specializations.map((spec) => (
-//               <option key={spec} value={spec}>
-//                 {spec}
-//               </option>
-//             ))}
-//           </select>
-//         </div>
-
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-//           {filteredAstrologers.map((astrologer, index) => (
-//             <AstrologerCard key={index} astrologer={astrologer} />
-//           ))}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AstrologerListing;
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchastrologers } from "../api/apiCalls";
+import { useQuery,useMutation } from "@tanstack/react-query";
+import { fetchastrologers,addEnquiry } from "../api/apiCalls";
 import { Star, MessageSquare, X, Home } from "lucide-react";
 import { Link } from "react-router-dom";
-
+import toast, { Toaster } from "react-hot-toast"; 
 // Custom Modal Component
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
@@ -666,331 +34,194 @@ const CallIntakeForm = ({ isOpen, onClose, astrologer }) => {
     maritalStatus: "",
     topicOfConcern: "",
     mobileNumber: "",
-    includePartner: false,
-    partnerDetails: {
-      firstName: "",
-      lastName: "",
-      dateOfBirth: "",
-      timeOfBirth: "",
-      placeOfBirth: "",
-      gender: "",
+    type:"chat",
+  });
+
+  // Mutation for adding enquiry
+  const mutation = useMutation({
+    mutationFn: addEnquiry, // Function to execute
+    onSuccess: (data) => {
+      toast.success("Chat Enquiry submitted successfully!", { duration: 3000 });
+      console.log("Enquiry added successfully:", data);
+      onClose(); // Close the modal on success
+    },
+    onError: (error) => {
+      toast.error("There was an error submitting the enquiry. Please try again.", {
+        duration: 4000,
+      });
+      console.error("Error submitting enquiry:", error);
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    onClose();
+
+    // Validate required fields
+    if (
+      !formData.firstName ||
+      !formData.gender ||
+      !formData.dateOfBirth ||
+      !formData.placeOfBirth ||
+      !formData.maritalStatus ||
+      !formData.mobileNumber
+    ) {
+      toast.error("Please fill in all required fields.", { duration: 3000 });
+      return;
+    }
+
+    // Trigger the mutation
+    mutation.mutate({
+      ...formData,
+      astrologerId: astrologer?.id, // Include astrologer ID if applicable
+    });
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Chat Intake Form</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
-          >
-            <X size={24} />
-          </button>
-        </div>
+    <>
+      {/* Toaster Component */}
+      <Toaster position="top-right" reverseOrder={false} />
 
-        <div className="bg-yellow-100 p-4 rounded-lg mb-4">
-          <p>Yay! You are eligible for first 3 min free session</p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                First Name *
-              </label>
-              <input
-                type="text"
-                required
-                className="w-full p-2 border rounded"
-                value={formData.firstName}
-                onChange={(e) =>
-                  setFormData({ ...formData, firstName: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Last Name
-              </label>
-              <input
-                type="text"
-                className="w-full p-2 border rounded"
-                value={formData.lastName}
-                onChange={(e) =>
-                  setFormData({ ...formData, lastName: e.target.value })
-                }
-              />
-            </div>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <div className="p-6">
+          {/* Header */}
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold">Call Intake Form</h2>
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+              <X size={24} />
+            </button>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1">Gender *</label>
-            <select
-              required
-              className="w-full p-2 border rounded"
-              value={formData.gender}
-              onChange={(e) =>
-                setFormData({ ...formData, gender: e.target.value })
-              }
-            >
-              <option value="">--Select--</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
+          {/* Free Session Banner */}
+          <div className="bg-yellow-100 p-4 rounded-lg mb-4">
+            <p>Yay! You are eligible for the first 3-minute free session.</p>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Date of Birth *
-              </label>
-              <input
-                type="date"
-                required
-                className="w-full p-2 border rounded"
-                value={formData.dateOfBirth}
-                onChange={(e) =>
-                  setFormData({ ...formData, dateOfBirth: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Time of Birth *
-              </label>
-              <input
-                type="time"
-                required
-                className="w-full p-2 border rounded"
-                value={formData.timeOfBirth}
-                onChange={(e) =>
-                  setFormData({ ...formData, timeOfBirth: e.target.value })
-                }
-              />
-              <div className="mt-1">
-                <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox"
-                    checked={!formData.timeOfBirth}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        timeOfBirth: e.target.checked
-                          ? ""
-                          : formData.timeOfBirth,
-                      })
-                    }
-                  />
-                  <span className="ml-2 text-sm">I Don't Know</span>
-                </label>
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* First Name and Last Name */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">First Name *</label>
+                <input
+                  type="text"
+                  required
+                  className="w-full p-2 border rounded"
+                  value={formData.firstName}
+                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Last Name</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded"
+                  value={formData.lastName}
+                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                />
               </div>
             </div>
-          </div>
 
-          <div className="grid grid-cols-2 gap-4">
+            {/* Gender */}
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Place of Birth *
-              </label>
+              <label className="block text-sm font-medium mb-1">Gender *</label>
+              <select
+                required
+                className="w-full p-2 border rounded"
+                value={formData.gender}
+                onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+              >
+                <option value="">--Select--</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            {/* Date of Birth and Time of Birth */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Date of Birth *</label>
+                <input
+                  type="date"
+                  required
+                  className="w-full p-2 border rounded"
+                  value={formData.dateOfBirth}
+                  onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Time of Birth</label>
+                <input
+                  type="time"
+                  className="w-full p-2 border rounded"
+                  value={formData.timeOfBirth}
+                  onChange={(e) => setFormData({ ...formData, timeOfBirth: e.target.value })}
+                />
+              </div>
+            </div>
+
+            {/* Place of Birth */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Place of Birth *</label>
               <input
                 type="text"
                 required
                 className="w-full p-2 border rounded"
                 value={formData.placeOfBirth}
-                onChange={(e) =>
-                  setFormData({ ...formData, placeOfBirth: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, placeOfBirth: e.target.value })}
               />
             </div>
+
+            {/* Marital Status */}
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Marital Status *
-              </label>
+              <label className="block text-sm font-medium mb-1">Marital Status *</label>
               <select
                 required
                 className="w-full p-2 border rounded"
                 value={formData.maritalStatus}
-                onChange={(e) =>
-                  setFormData({ ...formData, maritalStatus: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, maritalStatus: e.target.value })}
               >
                 <option value="">--Select--</option>
                 <option value="single">Single</option>
                 <option value="married">Married</option>
                 <option value="divorced">Divorced</option>
                 <option value="widowed">Widowed</option>
+                <option value="widowed">Separated</option>
               </select>
             </div>
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Topic of Concern
-            </label>
-            <select
-              className="w-full p-2 border rounded"
-              value={formData.topicOfConcern}
-              onChange={(e) =>
-                setFormData({ ...formData, topicOfConcern: e.target.value })
-              }
+            {/* Mobile Number */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Mobile Number *</label>
+              <div className="flex">
+                <select className="w-24 p-2 border rounded-l">
+                  <option value="+91">+91</option>
+                  <option value="+1">+1</option>
+                </select>
+                <input
+                  type="tel"
+                  required
+                  className="flex-1 p-2 border rounded-r"
+                  value={formData.mobileNumber}
+                  onChange={(e) => setFormData({ ...formData, mobileNumber: e.target.value })}
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={mutation.isLoading}
+              className={`w-full text-black font-semibold py-2 px-4 rounded ${
+                mutation.isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-yellow-400 hover:bg-yellow-500"
+              }`}
             >
-              <option value="">Select your concern</option>
-              <option value="career">Career & Job</option>
-              <option value="love">Love & Relationship</option>
-              <option value="marriage">Marriage</option>
-              <option value="health">Health</option>
-              <option value="finance">Finance</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Mobile Number *
-            </label>
-            <div className="flex">
-              <select className="w-24 p-2 border rounded-l">
-                <option value="+91">+91</option>
-                <option value="+1">+1</option>
-              </select>
-              <input
-                type="tel"
-                required
-                className="flex-1 p-2 border rounded-r"
-                value={formData.mobileNumber}
-                onChange={(e) =>
-                  setFormData({ ...formData, mobileNumber: e.target.value })
-                }
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox"
-                checked={formData.includePartner}
-                onChange={(e) =>
-                  setFormData({ ...formData, includePartner: e.target.checked })
-                }
-              />
-              <span className="ml-2">Enter Partner's Details</span>
-            </label>
-          </div>
-
-          {formData.includePartner && (
-            <div className="space-y-4 border-t pt-4 mt-4">
-              <h3 className="font-medium">Partner's Details</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    First Name *
-                  </label>
-                  <input
-                    type="text"
-                    required={formData.includePartner}
-                    className="w-full p-2 border rounded"
-                    value={formData.partnerDetails.firstName}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        partnerDetails: {
-                          ...formData.partnerDetails,
-                          firstName: e.target.value,
-                        },
-                      })
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full p-2 border rounded"
-                    value={formData.partnerDetails.lastName}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        partnerDetails: {
-                          ...formData.partnerDetails,
-                          lastName: e.target.value,
-                        },
-                      })
-                    }
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Date of Birth *
-                  </label>
-                  <input
-                    type="date"
-                    required={formData.includePartner}
-                    className="w-full p-2 border rounded"
-                    value={formData.partnerDetails.dateOfBirth}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        partnerDetails: {
-                          ...formData.partnerDetails,
-                          dateOfBirth: e.target.value,
-                        },
-                      })
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Gender *
-                  </label>
-                  <select
-                    required={formData.includePartner}
-                    className="w-full p-2 border rounded"
-                    value={formData.partnerDetails.gender}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        partnerDetails: {
-                          ...formData.partnerDetails,
-                          gender: e.target.value,
-                        },
-                      })
-                    }
-                  >
-                    <option value="">--Select--</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <button
-            type="submit"
-            className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-4 rounded"
-          >
-            Start Chat with {astrologer?.name || "Astrologer"}
-          </button>
-        </form>
-      </div>
-    </Modal>
+              {mutation.isLoading ? "Submitting..." : `Start Call with ${astrologer?.name || "Astrologer"}`}
+            </button>
+          </form>
+        </div>
+      </Modal>
+    </>
   );
 };
 

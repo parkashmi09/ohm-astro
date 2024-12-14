@@ -14,4 +14,5 @@ export const endpoints = {
   getBlogsByCategory: "/api/blogs/category/name",
   getRecentBlogs: "/api/blogs/recent",
   getPanchang: "/api/free-services/panchang", // Add Panchang endpoint
+  addEnquiry: "/api/enquiry/add", // New POST endpoint
 };

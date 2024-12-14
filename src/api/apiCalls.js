@@ -97,3 +97,18 @@ export const fetchPanchang = async () => {
     throw error;
   }
 };
+
+
+export const addEnquiry = async (enquiryData) => {
+  try {
+    // Make the POST request using axios
+    const response = await axiosInstance.post(endpoints.addEnquiry, enquiryData);
+
+    // Return the response data
+    return response.data;
+  } catch (error) {
+    // Log the error and throw it for handling in the mutation's onError callback
+    console.error("Error adding enquiry:", error);
+    throw new Error("There was an error submitting the enquiry. Please try again.");
+  }
+};
