@@ -60,8 +60,8 @@ const BlogHeader = () => {
 
 const BlogSlider = () => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["blogs", { limit: 10, page: 1 }], // Query key with params
-    queryFn: () => fetchBlogs({ limit: 10, page: 1 }), // Fetch function
+    queryKey: ["blogs", { limit: 10, page: 1 }],
+    queryFn: () => fetchBlogs({ limit: 10, page: 1 }),
   });
 
   console.log("this blog data", data);
@@ -69,9 +69,14 @@ const BlogSlider = () => {
   if (isLoading) return <p>Loading blogs...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+  // Filter duplicates (if any) using `_id`
+  const uniquePosts = data?.data.filter(
+    (post, index, self) => self.findIndex((p) => p._id === post._id) === index
+  );
+
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: uniquePosts.length > 3, // Disable infinite if less than 3 slides
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -96,20 +101,23 @@ const BlogSlider = () => {
   return (
     <div className="mb-8">
       <Slider {...settings}>
-        {data?.data.map((post) => (
-          <div key={post._id} className=" px-2">
+        {uniquePosts.map((post) => (
+          <div key={post._id} className="px-2">
             <div className="bg-white rounded-lg shadow overflow-hidden">
-              <img
-                src={post.category.image}
-                alt={post.title}
-                className="w-full h-48 object-cover"
-              />
+            <img
+                  src={post.category.image}
+                  alt={post.title}
+                  className="w-full h-full object-contain" // Ensures full image visibility
+                />
               <div className="p-4">
                 <div className="text-sm text-gray-500 mb-2">
-                  {post.category.createdAt} by {post.author}
+                  {new Date(post.category.createdAt).toLocaleDateString()} by{" "}
+                  {post.author}
                 </div>
                 <h3 className="font-semibold mb-2">{post.category.name}</h3>
-                <p className="text-sm text-gray-600">{post.english.excerpt}</p>
+                <p className="text-sm text-gray-600">
+                  {post.english.excerpt}
+                </p>
               </div>
             </div>
           </div>
@@ -118,6 +126,7 @@ const BlogSlider = () => {
     </div>
   );
 };
+
 
 const Sidebar = () => {
   const [email, setEmail] = useState("");
@@ -289,7 +298,7 @@ const BlogLayout = () => {
                   <img
                     src={post.category.image}
                     alt={post.title}
-                    className="w-full h-48 object-cover rounded-lg mb-4"
+                    className="w-full h-full object-contain"
                   />
                   <div className="text-sm text-gray-500 mb-2">
                     {post.createdAt} by {post.author}
@@ -307,7 +316,7 @@ const BlogLayout = () => {
                           <img
                             src={post.category.image}
                             alt="Nakshatra Compatibility"
-                            className="w-full h-32 object-cover rounded"
+                            className="w-full h-full object-contain"
                           />
                         </div>
                         <div className="space-y-2 mt-4">

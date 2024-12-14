@@ -149,7 +149,7 @@ const KundaliMatching = () => {
             astrologers.
           </p>
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-2 uppercase">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-2 mt-4 uppercase">
               {t.GunaMilan}
             </h2>
             <div className="w-24 h-1 bg-red-500 mx-auto"></div>
@@ -297,14 +297,14 @@ const KundaliMatching = () => {
         </div>
 
         {/* Red underline decorations for headings */}
-        <div
+        {/* <div
           className="absolute left-1/2 transform -translate-x-1/2 w-32 h-1 bg-red-500"
           style={{ top: "3rem" }}
         ></div>
         <div
           className="absolute left-1/2 transform -translate-x-1/2 w-32 h-1 bg-red-500"
           style={{ top: "24rem" }}
-        ></div>
+        ></div> */}
       </div>
 
       <MarriageBanner/>

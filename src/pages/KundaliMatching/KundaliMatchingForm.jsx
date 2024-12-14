@@ -192,7 +192,7 @@ const KundaliMatchingForm = () => {
                     </select>
                   </div>
 
-                  <div className="max-w-md mx-auto">
+                  <div className="max-w-md ">
                     <label className="block text-gray-700 mb-2">{t.Email}</label>
                     <input
                       type="email"
