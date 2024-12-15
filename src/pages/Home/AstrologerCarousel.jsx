@@ -12,7 +12,7 @@ const CustomArrow = ({ direction, onClick }) => (
     onClick={onClick}
     className={`
       absolute top-1/2 -translate-y-1/2 z-20
-      ${direction === "left" ? "-left-4" : "-right-4"}
+      ${direction === "left" ? "-left-2" : "-right-2"}
       flex items-center justify-center
       w-8 h-8 rounded-full
       bg-white 

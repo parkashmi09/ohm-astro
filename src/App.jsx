@@ -49,6 +49,7 @@ import "react-toastify/dist/ReactToastify.css";
 import MonthlyHoroscope from "./pages/DailyHoroscope/YearlyHoroscope";
 import YearlyHoroscope from "./pages/DailyHoroscope/MonthlyHoroscope";
 import Horoscope from "./pages/DailyHoroscope/Horoscope";
+import NotFound from "./pages/NotFound";
 function App() {
   return (
     <Provider store={store}>
@@ -108,6 +109,8 @@ function App() {
             <Route path="/yearly-horoscope" element={<MonthlyHoroscope />} />
             <Route path="/monthly-horoscope" element={<YearlyHoroscope />} />
             <Route path="/horoscope" element={<Horoscope />} />
+
+            <Route path="*" element={<NotFound />} />
             
             
           </Route>

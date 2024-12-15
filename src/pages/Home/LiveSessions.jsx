@@ -161,7 +161,7 @@ const LiveSessions = () => {
                   <h3 className="font-semibold">{astrologer.name}</h3>
                 </div>
                 <p className="text-sm text-yellow-400">
-                  {astrologer.specialties.name}
+                  {astrologer.name}
                 </p>
               </div>
             </div>
