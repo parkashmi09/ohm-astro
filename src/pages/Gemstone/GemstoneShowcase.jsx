@@ -9,53 +9,6 @@ import translations from '../../components/translations/translations';
 import { useQuery,useMutation } from "@tanstack/react-query";
 import { fetchGemstones,postGemstone } from "../../api/apiCalls";
 
-// Product data
-// const products = [
-//   {
-//     id: 1,
-//     name: "Blue Sapphire 7.07 carat",
-//     origin: "Sri Lanka(Ceylon)",
-//     weight: "7.070 Carat/ 7.750 Ratti",
-//     price: "466620",
-//     image: "https://cdn.anytimeastro.com/anytimeastro/store/prodimg/live/thumb/1/SA204164065/SA204164065_main.jpg"
-//   },
-//   {
-//     id: 2,
-//     name: "Natural Blue Sapphire",
-//     origin: "SRI LANKA(CYLON)",
-//     weight: "5.400 Carat/ 5.920 Ratti",
-//     price: "432000",
-//     image: "https://cdn.anytimeastro.com/anytimeastro/store/prodimg/live/thumb/1/G174937833/G174937833_main.jpg"
-//   },
-//   {
-//     id: 3,
-//     name: "Blue Sapphire 2.98 carat",
-//     origin: "Sri Lanka(Ceylon)",
-//     weight: "2.980 Carat/ 3.270 Ratti",
-//     price: "357600",
-//     image: "https://cdn.anytimeastro.com/anytimeastro/store/prodimg/live/thumb/1/SA204164065/SA204164065_main.jpg"
-//   },
-//   {
-//     id: 4,
-//     name: "Blue Sapphire",
-//     origin: "Sri Lanka(Ceylon)",
-//     weight: "9.810 Carat/ 10.780 Ratti",
-//     price: "353160",
-//     image: "https://cdn.anytimeastro.com/anytimeastro/store/prodimg/live/thumb/1/G174937833/G174937833_main.jpg"
-//   },
-//   {
-//     id: 5,
-//     name: "Blue Sapphire 11.20 carat",
-//     origin: "Sri Lanka(Ceylon)",
-//     weight: "11.200 Carat/ 12.290 Ratti",
-//     price: "336000",
-//     image: "https://cdn.anytimeastro.com/anytimeastro/store/prodimg/live/thumb/1/SA204164065/SA204164065_main.jpg"
-//   }
-// ];
-
-// Form Modal Component
-
- // Ensure this file exports the postGemstone function
 
 const ProductInquiryModal = ({ isOpen, onClose, product, token }) => {
   const [formData, setFormData] = useState({
@@ -123,11 +76,11 @@ const ProductInquiryModal = ({ isOpen, onClose, product, token }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg w-full max-w-xl relative max-h-[80vh] overflow-y-auto">
-        <button 
+      <button 
           onClick={onClose}
-          className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
+          className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 text-2xl"
         >
-          {/* Add your close button icon */}
+          <X /> {/* Close Button using the X icon from lucide-react */}
         </button>
 
         <div className="p-6">
@@ -197,7 +150,7 @@ const ProductCard = ({ product }) => {
   return (
     <>
       <div 
-        className="relative bg-white w-[250px] rounded-2xl border border-gray-200 shadow-2xl overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-3xl group"
+        className="relative bg-white w-[300px] rounded-2xl border mx-auto border-gray-200 shadow-2xl overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-3xl group"
       >
         {/* Wishlist Icon */}
        
@@ -323,7 +276,7 @@ const BestSellers = () => {
         {t.OurBestSellers}
         <div className="w-16 h-1 bg-red-500 mx-auto mt-2"></div>
       </h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 "> 
         {data?.gemstones.map(product => (
           <ProductCard key={product._id} product={product} />
         ))}

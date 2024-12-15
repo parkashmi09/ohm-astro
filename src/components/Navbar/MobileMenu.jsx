@@ -1,26 +1,22 @@
 import { useState } from "react";
-import {
-    X,
-    ChevronDown,
-    ChevronUp, 
-  } from "lucide-react";
+import { X, ChevronDown, ChevronUp } from "lucide-react";
 
-  import { useSelector } from 'react-redux';
-import translations from '../translations/translations';
+import { useSelector } from "react-redux";
+import translations from "../translations/translations";
 const menuData = {
   AstrologyOnline: [
     { title: "Talk To Astrologer", link: "/AstrologerListing" },
     { title: "Chat With Astrologer", link: "/Astrologchat" },
-    { title: "Marital Life", link: "/marital-life" },
-    { title: "Love & Relationships", link: "/love-and-relationships" },
-    { title: "Career & Job", link: "/career-job" },
-    { title: "Cheating & Affairs", link: "/cheating-affairs" },
-    { title: "Numerology", link: "/numerology" },
-    { title: "Break-Up & Divorce", link: "/breakup-divorce" },
-    { title: "Vedic Astrology", link: "/vedic-astrology" },
-    { title: "Kids & Education", link: "/kids-education" },
-    { title: "Tarot Reading", link: "/tarot-reading" },
-    { title: "Relationship Counseling", link: "/relationship-counseling" },
+    // { title: "Marital Life", link: "/" },
+    // { title: "Love & Relationships", link: "/" },
+    // { title: "Career & Job", link: "/" },
+    // { title: "Cheating & Affairs", link: "/" },
+    // { title: "Numerology", link: "/numerology" },
+    // { title: "Break-Up & Divorce", link: "" },
+    // { title: "Vedic Astrology", link: "/vedic-astrology" },
+    // { title: "Kids & Education", link: "/kids-education" },
+    // { title: "Tarot Reading", link: "/tarot-reading" },
+    // { title: "Relationship Counseling", link: "/relationship-counseling" },
   ],
   muhurat: [
     { title: "Choghadiya", link: "/choghadiya" },
@@ -57,7 +53,6 @@ const menuData = {
     },
   ],
 };
-
 
 import { Link } from "react-router-dom"; // If using react-router-dom
 
@@ -114,7 +109,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                       className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-colors"
                     >
                       <span>
-                        {t[item.title.toLowerCase().replace(/\s+/g, '')] ||
+                        {t[item.title.toLowerCase().replace(/\s+/g, "")] ||
                           item.title}
                       </span>
                       {item.isNew && (
@@ -129,10 +124,11 @@ const MobileMenu = ({ isOpen, onClose }) => {
                           <Link
                             key={subItem.title}
                             to={subItem.link || "#"}
-                            className="p-3 hover:bg-gray-50 rounded-lg transition-colors"
+                            className="p-3 hover:bg-gray-50 rounded-lg flex transition-colors"
                           >
-                            {t[subItem.title.toLowerCase().replace(/\s+/g, '')] ||
-                              subItem.title}
+                            {t[
+                              subItem.title.toLowerCase().replace(/\s+/g, "")
+                            ] || subItem.title}
                           </Link>
                         ))}
                       </div>
@@ -150,14 +146,21 @@ const MobileMenu = ({ isOpen, onClose }) => {
             to="/AstrologerListing"
             className="block text-center p-4 bg-yellow-500 text-black rounded-full hover:bg-white  hover:border-2 hover:border-yellow-500 transition-colors"
           >
-            {t['talktoastrologer'] || "Talk To Astrologer"}
+            {t["talktoastrologer"] || "Talk To Astrologer"}
           </Link>
           <Link
             to="/Astrologchat"
             className="block text-center p-4 bg-yellow-500 text-black rounded-full hover:bg-white hover:border-2 hover:border-yellow-500 transition-colors"
           >
-            {t['chatwithastrologer'] || "Chat With Astrologer"}
+            {t["chatwithastrologer"] || "Chat With Astrologer"}
           </Link>
+
+          {/* <Link
+            to="/Astrologchat"
+            className="block text-center p-4 bg-yellow-500 text-black rounded-full hover:bg-white hover:border-2 hover:border-yellow-500 transition-colors"
+          >
+            {t["chatwithastrologer"] || "Chat With Astrologer"}
+          </Link> */}
         </div>
       </div>
     </div>
@@ -165,4 +168,3 @@ const MobileMenu = ({ isOpen, onClose }) => {
 };
 
 export default MobileMenu;
-
