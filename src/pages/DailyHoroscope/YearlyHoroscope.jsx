@@ -1,10 +1,9 @@
 import { Calendar } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import VedicAstrologersSection from "../ConsultWithTopVedicAstrologers";
-import HoroscopeBenefits from "./HoroscopeBenefits";
 import { useSelector } from "react-redux";
 import translations from "../../components/translations/translations";
-
+import Yearlybenift from "./Yearlybenift";
 import { useQuery } from "@tanstack/react-query";
 import { fetchHoroscope } from "../../api/apiCalls";
 
@@ -23,7 +22,7 @@ const Breadcrumb = () => {
           {t.Horoscope}
         </Link>
         <span>›</span>
-        <span>{t.DailyHoroscope}</span>
+        <span>{t.YearlyHoroscope}</span>
       </div>
     </div>
   );
@@ -38,7 +37,7 @@ const HoroscopeHeader = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">
-            {t.FreeDailyHoroscope}
+            {t.YearlyHoroscope}
             <div className="w-16 h-1 bg-red-500 mt-2"></div>
           </h1>
           <Calendar className="w-12 h-12 text-red-500" />
@@ -163,7 +162,7 @@ const TodaysHoroscope = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
       <h2 className="text-center text-3xl font-bold mb-4">
-        {t.Todays} <span className="text-red-500">{t.Horoscope}</span>
+        {t.YearlyHoroscope}   <span className="text-red-500">{t.Horoscope}</span>
       </h2>
       <p className="text-center text-gray-700 mb-12 max-w-3xl mx-auto">
         {t.Descriptions}
@@ -195,16 +194,16 @@ const TodaysHoroscope = () => {
 };
 
 // Main Component
-const DailyHoroscope = () => {
+const MonthlyHoroscope = () => {
   return (
     <div>
       <Breadcrumb />
       <HoroscopeHeader />
       <TodaysHoroscope />
       <VedicAstrologersSection />
-      <HoroscopeBenefits />
+      <Yearlybenift />
     </div>
   );
 };
 
-export default DailyHoroscope;
+export default MonthlyHoroscope;

@@ -66,7 +66,14 @@ const BlogSlider = () => {
 
   console.log("this blog data", data);
 
-  if (isLoading) return <p>Loading blogs...</p>;
+  if (isLoading)
+    return (
+      <div className="text-center p-8">
+        {/* Spinner */}
+        <div className="inline-block w-16 h-16 border-4 border-t-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+        <p className="mt-4">Loading top-rated astrologers...</p>
+      </div>
+    );
   if (error) return <p>Error: {error.message}</p>;
 
   // Filter duplicates (if any) using `_id`
@@ -104,20 +111,18 @@ const BlogSlider = () => {
         {uniquePosts.map((post) => (
           <div key={post._id} className="px-2">
             <div className="bg-white rounded-lg shadow overflow-hidden">
-            <img
-                  src={post.category.image}
-                  alt={post.title}
-                  className="w-full h-full object-contain" // Ensures full image visibility
-                />
+              <img
+                src={post.category.image}
+                alt={post.title}
+                className="w-full h-full object-contain" // Ensures full image visibility
+              />
               <div className="p-4">
                 <div className="text-sm text-gray-500 mb-2">
                   {new Date(post.category.createdAt).toLocaleDateString()} by{" "}
                   {post.author}
                 </div>
                 <h3 className="font-semibold mb-2">{post.category.name}</h3>
-                <p className="text-sm text-gray-600">
-                  {post.english.excerpt}
-                </p>
+                <p className="text-sm text-gray-600">{post.english.excerpt}</p>
               </div>
             </div>
           </div>
@@ -126,7 +131,6 @@ const BlogSlider = () => {
     </div>
   );
 };
-
 
 const Sidebar = () => {
   const [email, setEmail] = useState("");
@@ -149,7 +153,14 @@ const Sidebar = () => {
     queryFn: () => fetchBlogsByCategory({ categoryName: "Tarot Reading" }), // Fetch function
   });
 
-  if (isLoading) return <p>Loading blogs...</p>;
+  if (isLoading)
+    return (
+      <div className="text-center p-8">
+        {/* Spinner */}
+        <div className="inline-block w-16 h-16 border-4 border-t-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+        <p className="mt-4">Loading top-rated astrologers...</p>
+      </div>
+    );
   if (error) return <p>Error: {error.message}</p>;
 
   console.log("Blogs by Category:", blogsByCategory);
@@ -205,7 +216,11 @@ const Sidebar = () => {
               ))
             ) : // Show recent posts
             isLoading ? (
-              <p>Loading recent posts...</p>
+              <div className="text-center p-8">
+                {/* Spinner */}
+                <div className="inline-block w-16 h-16 border-4 border-t-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+                <p className="mt-4">Loading top-rated astrologers...</p>
+              </div>
             ) : error ? (
               <p>Error loading recent posts</p>
             ) : (
@@ -269,7 +284,14 @@ const BlogLayout = () => {
 
   console.log("this blog data", data);
 
-  if (isLoading) return <p>Loading blogs...</p>;
+  if (isLoading)
+    return (
+      <div className="text-center p-8">
+        {/* Spinner */}
+        <div className="inline-block w-16 h-16 border-4 border-t-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+        <p className="mt-4">Loading top-rated astrologers...</p>
+      </div>
+    );
   if (error) return <p>Error: {error.message}</p>;
   return (
     <div className="bg-gray-100 min-h-screen">

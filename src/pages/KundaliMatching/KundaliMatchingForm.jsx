@@ -1,50 +1,100 @@
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import translations from '../../components/translations/translations';
 
 const KundaliMatchingForm = () => {
   const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "January", "February", "March", "April", "May", "June", "July", "August", 
+    "September", "October", "November", "December",
   ];
-  const days = Array.from({ length: 31 }, (_, i) =>
-    String(i + 1).padStart(2, "0")
-  );
+  const days = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, "0"));
   const years = Array.from({ length: 100 }, (_, i) => 2024 - i);
-  const hours = Array.from({ length: 12 }, (_, i) =>
-    String(i + 1).padStart(2, "0")
-  );
-  const minutes = Array.from({ length: 60 }, (_, i) =>
-    String(i).padStart(2, "0")
-  );
+  const hours = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "0"));
+  const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, "0"));
   const meridiem = ["AM", "PM"];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-  };
+  // State object for both boy and girl details
+  const [formData, setFormData] = useState({
+    boy: {
+      name: '',
+      birthDate: { month: '', day: '', year: '' },
+      birthTime: { hour: '', minute: '', second: '', meridiem: '' },
+      placeOfBirth: '',
+      dontKnowBirthTime: false,
+    },
+    girl: {
+      name: '',
+      birthDate: { month: '', day: '', year: '' },
+      birthTime: { hour: '', minute: '', second: '', meridiem: '' },
+      placeOfBirth: '',
+      email: '',
+      dontKnowBirthTime: false,
+    },
+  });
 
   const language = useSelector((state) => state.language.language);
   const t = translations[language];
 
+  // Handle changes in input fields
+  const handleInputChange = (e, person) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [person]: {
+        ...prevData[person],
+        [name]: value,
+      },
+    }));
+  };
+
+  const handleDateChange = (e, person, field) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [person]: {
+        ...prevData[person],
+        birthDate: {
+          ...prevData[person].birthDate,
+          [name]: value,
+        },
+      },
+    }));
+  };
+
+  const handleTimeChange = (e, person, field) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [person]: {
+        ...prevData[person],
+        birthTime: {
+          ...prevData[person].birthTime,
+          [name]: value,
+        },
+      },
+    }));
+  };
+
+  const handleCheckboxChange = (e, person) => {
+    const { checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [person]: {
+        ...prevData[person],
+        dontKnowBirthTime: checked,
+      },
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here, such as sending formData to the server
+    console.log(formData);
+  };
+
   return (
     <div className="min-h-screen bg-pink-50 py-8 px-4">
       <div className="max-w-6xl mx-auto">
-        {/* Form Header */}
-        {/* <h2 className="text-center text-lg font-semibold text-red-500 mb-8">
-          ENTER DETAILS
-        </h2> */}
-
-        {/* Form Section */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -56,7 +106,10 @@ const KundaliMatchingForm = () => {
                   </label>
                   <input
                     type="text"
+                    name="name"
+                    value={formData.boy.name}
                     placeholder="Enter Name"
+                    onChange={(e) => handleInputChange(e, 'boy')}
                     className="w-full p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
                   />
                 </div>
@@ -66,21 +119,36 @@ const KundaliMatchingForm = () => {
                     {t.BirthDate} <span className="text-red-500">*</span>
                   </label>
                   <div className="grid grid-cols-3 gap-2">
-                    <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                    <select
+                      name="month"
+                      value={formData.boy.birthDate.month}
+                      onChange={(e) => handleDateChange(e, 'boy', 'birthDate')}
+                      className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                    >
                       {months.map((month) => (
                         <option key={month} value={month}>
                           {month}
                         </option>
                       ))}
                     </select>
-                    <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                    <select
+                      name="day"
+                      value={formData.boy.birthDate.day}
+                      onChange={(e) => handleDateChange(e, 'boy', 'birthDate')}
+                      className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                    >
                       {days.map((day) => (
                         <option key={day} value={day}>
                           {day}
                         </option>
                       ))}
                     </select>
-                    <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                    <select
+                      name="year"
+                      value={formData.boy.birthDate.year}
+                      onChange={(e) => handleDateChange(e, 'boy', 'birthDate')}
+                      className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                    >
                       {years.map((year) => (
                         <option key={year} value={year}>
                           {year}
@@ -96,28 +164,48 @@ const KundaliMatchingForm = () => {
                   </label>
                   <div className="flex items-center">
                     <div className="grid grid-cols-4 gap-2 flex-grow">
-                      <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                      <select
+                        name="hour"
+                        value={formData.boy.birthTime.hour}
+                        onChange={(e) => handleTimeChange(e, 'boy', 'birthTime')}
+                        className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                      >
                         {hours.map((hour) => (
                           <option key={hour} value={hour}>
                             {hour}
                           </option>
                         ))}
                       </select>
-                      <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                      <select
+                        name="minute"
+                        value={formData.boy.birthTime.minute}
+                        onChange={(e) => handleTimeChange(e, 'boy', 'birthTime')}
+                        className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                      >
                         {minutes.map((minute) => (
                           <option key={minute} value={minute}>
                             {minute}
                           </option>
                         ))}
                       </select>
-                      <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                      <select
+                        name="second"
+                        value={formData.boy.birthTime.second}
+                        onChange={(e) => handleTimeChange(e, 'boy', 'birthTime')}
+                        className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                      >
                         {minutes.map((second) => (
                           <option key={second} value={second}>
                             {second}
                           </option>
                         ))}
                       </select>
-                      <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                      <select
+                        name="meridiem"
+                        value={formData.boy.birthTime.meridiem}
+                        onChange={(e) => handleTimeChange(e, 'boy', 'birthTime')}
+                        className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                      >
                         {meridiem.map((m) => (
                           <option key={m} value={m}>
                             {m}
@@ -129,6 +217,8 @@ const KundaliMatchingForm = () => {
                       <label className="flex items-center">
                         <input
                           type="checkbox"
+                          checked={formData.boy.dontKnowBirthTime}
+                          onChange={(e) => handleCheckboxChange(e, 'boy')}
                           className="form-checkbox text-pink-500"
                         />
                         <span className="ml-2 text-sm text-gray-600">
@@ -145,7 +235,10 @@ const KundaliMatchingForm = () => {
                   </label>
                   <input
                     type="text"
+                    name="placeOfBirth"
+                    value={formData.boy.placeOfBirth}
                     placeholder="New Delhi, India"
+                    onChange={(e) => handleInputChange(e, 'boy')}
                     className="w-full p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
                   />
                 </div>
@@ -159,31 +252,49 @@ const KundaliMatchingForm = () => {
                   </label>
                   <input
                     type="text"
+                    name="name"
+                    value={formData.girl.name}
                     placeholder="Enter Name"
+                    onChange={(e) => handleInputChange(e, 'girl')}
                     className="w-full p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
                   />
                 </div>
 
                 <div>
                   <label className="block text-gray-700 mb-2">
-                  {t.BirthDate} <span className="text-red-500">*</span>
+                    {t.BirthDate} <span className="text-red-500">*</span>
                   </label>
                   <div className="grid grid-cols-3 gap-2">
-                    <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                    <select
+                      name="month"
+                      value={formData.girl.birthDate.month}
+                      onChange={(e) => handleDateChange(e, 'girl', 'birthDate')}
+                      className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                    >
                       {months.map((month) => (
                         <option key={month} value={month}>
                           {month}
                         </option>
                       ))}
                     </select>
-                    <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                    <select
+                      name="day"
+                      value={formData.girl.birthDate.day}
+                      onChange={(e) => handleDateChange(e, 'girl', 'birthDate')}
+                      className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                    >
                       {days.map((day) => (
                         <option key={day} value={day}>
                           {day}
                         </option>
                       ))}
                     </select>
-                    <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                    <select
+                      name="year"
+                      value={formData.girl.birthDate.year}
+                      onChange={(e) => handleDateChange(e, 'girl', 'birthDate')}
+                      className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                    >
                       {years.map((year) => (
                         <option key={year} value={year}>
                           {year}
@@ -191,45 +302,56 @@ const KundaliMatchingForm = () => {
                       ))}
                     </select>
                   </div>
-
-                  <div className="max-w-md ">
-                    <label className="block text-gray-700 mb-2">{t.Email}</label>
-                    <input
-                      type="email"
-                      placeholder="Enter Email"
-                      className="w-full p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
-                    />
-                  </div>
                 </div>
 
                 <div>
                   <label className="block text-gray-700 mb-2">
-                  {t.BirthTime} <span className="text-red-500">*</span>
+                    {t.BirthTime} <span className="text-red-500">*</span>
                   </label>
                   <div className="flex items-center">
                     <div className="grid grid-cols-4 gap-2 flex-grow">
-                      <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                      <select
+                        name="hour"
+                        value={formData.girl.birthTime.hour}
+                        onChange={(e) => handleTimeChange(e, 'girl', 'birthTime')}
+                        className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                      >
                         {hours.map((hour) => (
                           <option key={hour} value={hour}>
                             {hour}
                           </option>
                         ))}
                       </select>
-                      <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                      <select
+                        name="minute"
+                        value={formData.girl.birthTime.minute}
+                        onChange={(e) => handleTimeChange(e, 'girl', 'birthTime')}
+                        className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                      >
                         {minutes.map((minute) => (
                           <option key={minute} value={minute}>
                             {minute}
                           </option>
                         ))}
                       </select>
-                      <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                      <select
+                        name="second"
+                        value={formData.girl.birthTime.second}
+                        onChange={(e) => handleTimeChange(e, 'girl', 'birthTime')}
+                        className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                      >
                         {minutes.map((second) => (
                           <option key={second} value={second}>
                             {second}
                           </option>
                         ))}
                       </select>
-                      <select className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500">
+                      <select
+                        name="meridiem"
+                        value={formData.girl.birthTime.meridiem}
+                        onChange={(e) => handleTimeChange(e, 'girl', 'birthTime')}
+                        className="p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                      >
                         {meridiem.map((m) => (
                           <option key={m} value={m}>
                             {m}
@@ -241,10 +363,12 @@ const KundaliMatchingForm = () => {
                       <label className="flex items-center">
                         <input
                           type="checkbox"
+                          checked={formData.girl.dontKnowBirthTime}
+                          onChange={(e) => handleCheckboxChange(e, 'girl')}
                           className="form-checkbox text-pink-500"
                         />
                         <span className="ml-2 text-sm text-gray-600">
-                          Don't Know Birth Time
+                          {t.DontKnowBirthTime}
                         </span>
                       </label>
                     </div>
@@ -253,20 +377,34 @@ const KundaliMatchingForm = () => {
 
                 <div>
                   <label className="block text-gray-700 mb-2">
-                  {t.PlaceOfBirth} <span className="text-red-500">*</span>
+                    {t.PlaceOfBirth} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
+                    name="placeOfBirth"
+                    value={formData.girl.placeOfBirth}
                     placeholder="New Delhi, India"
+                    onChange={(e) => handleInputChange(e, 'girl')}
+                    className="w-full p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-2">
+                    {t.Email} <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.girl.email}
+                    placeholder="Enter Email"
+                    onChange={(e) => handleInputChange(e, 'girl')}
                     className="w-full p-2 border border-pink-200 rounded focus:outline-none focus:border-pink-500"
                   />
                 </div>
               </div>
             </div>
 
-            {/* Email Field */}
-
-            {/* Submit Button */}
             <div className="flex justify-end">
               <button
                 type="submit"

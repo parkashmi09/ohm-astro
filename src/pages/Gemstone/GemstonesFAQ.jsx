@@ -51,7 +51,7 @@ const GemstonesFAQ = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-center mb-8">
+      <h1 className="text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-8 text-center">
         {t.whyrespect}
       </h1>
       

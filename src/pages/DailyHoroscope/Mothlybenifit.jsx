@@ -13,7 +13,7 @@ const BenefitsSection = () => {
   const benefitsContent = {
     title: t.why,
     question: t.question,
-    paragraphs: t.paragraph,
+    paragraphs: t.monthlyHoroscopeDetails,
   };
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
@@ -91,7 +91,7 @@ const PromotionalBanner = () => {
 };
 
 // Main Component
-const HoroscopeBenefits = () => {
+const Mothlybenifit = () => {
   return (
     <div>
       <BenefitsSection />
@@ -100,4 +100,4 @@ const HoroscopeBenefits = () => {
   );
 };
 
-export default HoroscopeBenefits;
+export default Mothlybenifit;

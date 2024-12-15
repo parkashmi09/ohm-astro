@@ -6,7 +6,7 @@ import { kundaliData } from "../../components/content/astordata";
 const Section = ({ title, introduction, points }) => (
   <div className="mb-12">
     <div className="text-center mb-8">
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+      <h2 className="text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-2">
         {title}
       </h2>
       <div className="w-32 h-0.5 bg-red-500 mx-auto"></div>
@@ -40,7 +40,7 @@ const Section = ({ title, introduction, points }) => (
 const DoshaSection = ({ doshas }) => (
   <div className="mb-12">
     <div className="text-center mb-8">
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+      <h2 className="text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-2">
         KUNDALI MATCHING AND RELATED DOSHAS
       </h2>
       <div className="w-32 h-0.5 bg-red-500 mx-auto"></div>
@@ -62,7 +62,7 @@ const DoshaSection = ({ doshas }) => (
 const MatchingTypesSection = ({ matchingTypes }) => (
   <div className="mb-12">
     <div className="text-center mb-8">
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+      <h2 className="text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-2">
         DIFFERENCE BETWEEN KUNDALI MATCHING BY DATE OF BIRTH AND KUNDLI MATCHING
         BY NAME
       </h2>

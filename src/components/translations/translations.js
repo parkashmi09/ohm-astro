@@ -365,8 +365,29 @@ const translations = {
     free:"100% Free",
     LoginviaOTP:"Login via Email",
     WelcomeBack:"Welcome Back!",
+    MonthlyHoroscope:"Monthly Horoscope", 
+    monthlyHoroscopeDetails: [
+      "Every month brings new opportunities and challenges in different aspects of life. A Monthly Horoscope helps you navigate through these changes by offering predictions specific to each zodiac sign. It can provide insights into your financial growth, love life, career advancements, health concerns, and more. By understanding the monthly trends, you can plan your actions and decisions more effectively. Monthly Horoscopes are a great way to stay prepared for upcoming opportunities and avoid potential hurdles. The guidance of an experienced Astrologer can make your monthly horoscope even more accurate and actionable. Make the most of your month by understanding what lies ahead for your zodiac sign!",
+    ],
+    
+    YearlyHoroscope :" Yearly Horoscope", 
+    yearlyHoroscopeDetails:[  
+    "The life of an individual is divided into phases where they do certain things on a daily basis, weekly basis, monthly basis, and yearly basis. When it comes to the whole year, it’s a long time that can significantly impact your life. Yearly Horoscope can predict the best and worst times that one can expect throughout the year, helping to plan important aspects of life more effectively. Knowing the overall vibe or theme of the year makes it easier to handle ups and downs. Yearly Horoscope mostly focuses on financial status but also provides insights into love, career, business, and success. Yearly Horoscopes are beneficial for long-term planning. These predictions are not set in stone and can be improved with remedies and Astrological guidance. Consulting the best Astrologers is essential for meaningful insights. Click on your zodiac sign and make the most of your year by utilizing blessings and preparing for challenges!",
+    ],
+    
   },
   HIN: {
+    MonthlyHoroscope:"मासिक राशिफल",
+    
+    monthlyHoroscopeDetails: [
+      "हर महीने जीवन के विभिन्न पहलुओं में नए अवसर और चुनौतियाँ लेकर आता  मासिक राशिफल इन परिवर्तनों को समझने में आपकी मदद करता है और प्रत्येक राशि के लिए विशेष भविष्यवाणियाँ प्रदान करता है। यह आपके वित्तीय विकास, प्रेम जीवन, करियर की प्रगति, स्वास्थ्य संबंधी चिंताओं और अधिक के बारे में जानकारी दे सकता है। मासिक रुझानों को समझकर, आप अपने कार्यों और निर्णयों की बेहतर योजना बना सकते हैं। मासिक राशिफल आने वाले अवसरों के लिए तैयार रहने और संभावित बाधाओं से बचने का एक बेहतरीन तरीका है।,एक अनुभवी ज्योतिषी का मार्गदर्शन आपके मासिक राशिफल को और भी सटीक और क्रियान्वयन योग्य बना सकता है। अपने महीने का अधिकतम लाभ उठाने के लिए जानें कि आपकी राशि के लिए आगे क्या है!",
+    ],
+    
+    YearlyHoroscope :"वार्षिक राशिफल",
+    yearlyHoroscopeDetails: [ 
+    "व्यक्ति का जीवन विभिन्न चरणों में विभाजित होता है जहाँ वे दैनिक, साप्ताहिक, मासिक और वार्षिक आधार पर कुछ कार्य करते हैं। जब पूरे वर्ष की बात आती है, तो यह एक लंबा समय होता है जो आपके जीवन को काफी प्रभावित कर सकता है। वार्षिक राशिफल वर्ष भर में आने वाले सर्वोत्तम और सबसे बुरे समय की भविष्यवाणी कर सकता है, जिससे जीवन के महत्वपूर्ण पहलुओं की बेहतर योजना बनाई जा सके। वर्ष का समग्र थीम या वाइब जानना उतार-चढ़ाव से निपटना आसान बना देता है। वार्षिक राशिफल मुख्य रूप से वित्तीय स्थिति पर केंद्रित होता है, लेकिन यह प्यार, करियर, व्यवसाय, और सफलता के बारे में भी अंतर्दृष्टि प्रदान करता है। वार्षिक राशिफल दीर्घकालिक योजना के लिए बहुत लाभकारी साबित होते हैं। ये भविष्यवाणियाँ पत्थर की लकीर नहीं हैं और इन्हें उपायों और ज्योतिषीय मार्गदर्शन से सुधारा जा सकता है। सबसे अच्छे ज्योतिषियों से परामर्श करना आवश्यक है। अपनी राशि पर क्लिक करें और आशीर्वादों का उपयोग करते हुए वर्ष का अधिकतम लाभ उठाने और चुनौतियों के लिए तैयार हो जाएं!",
+    ],
+    
     WelcomeBack :"वापस स्वागत है",
     free:"100% मुफ़्त",
     ConsultationExperts:"विशेषज्ञों से परामर्श प्राप्त करें",

@@ -239,7 +239,7 @@ const AstrologySection = () => {
           onClick={() => setIsOpen(!isOpen)}
         >
           <div className="flex items-center justify-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text">
               {content.title}
             </h2>
             <ChevronDown

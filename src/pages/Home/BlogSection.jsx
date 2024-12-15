@@ -1,11 +1,10 @@
-
-import Slider from 'react-slick';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import translations from '../../components/translations/translations';
-import { useQuery } from '@tanstack/react-query';
-import { fetchBlogs } from '../../api/apiCalls';
+import Slider from "react-slick";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import translations from "../../components/translations/translations";
+import { useQuery } from "@tanstack/react-query";
+import { fetchBlogs } from "../../api/apiCalls";
 
 const CustomPrevArrow = ({ onClick }) => (
   <button
@@ -32,35 +31,43 @@ const BlogSection = () => {
   const t = translations[language];
   //api acess
   const { data, isLoading, error } = useQuery({
-    queryKey: ['blogs', { limit: 10, page: 1 }], // Query key with params
+    queryKey: ["blogs", { limit: 10, page: 1 }], // Query key with params
     queryFn: () => fetchBlogs({ limit: 10, page: 1 }), // Fetch function
   });
 
   console.log("this blogsection home data", data);
-  //  if (isLoading) return <p>Loading blogs...</p>;
-  //   if (error) return <p>Error: {error.message}</p>;
-
-
+  if (isLoading)
+    return (
+      <div className="text-center p-8">
+        {/* Spinner */}
+        <div className="inline-block w-16 h-16 border-4 border-t-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+        <p className="mt-4">Loading top-rated astrologers...</p>
+      </div>
+    );
+  if (error) return <p>Error: {error.message}</p>;
 
   const blogPosts = [
     {
       id: 1,
       title: t.blogtile1,
-      image: "https://wpcontent.anytimeastro.com/blog_anytimeastro/blogimages/1396/3765-jupiter-saturn-conjunction.jpg",
+      image:
+        "https://wpcontent.anytimeastro.com/blog_anytimeastro/blogimages/1396/3765-jupiter-saturn-conjunction.jpg",
       description: t.blogdesc1,
       badge: t.blogbage1,
     },
     {
       id: 2,
       title: t.blogtile2,
-      image: "https://wpcontent.anytimeastro.com/blog_anytimeastro/blogimages/1395/144-the-child-lenormand-card.jpg",
+      image:
+        "https://wpcontent.anytimeastro.com/blog_anytimeastro/blogimages/1395/144-the-child-lenormand-card.jpg",
       description: t.blogdesc2,
       badge: t.blogbage2,
     },
     {
       id: 3,
       title: t.blogtile3,
-      image: "https://wpcontent.anytimeastro.com/blog_anytimeastro/blogimages/1394/3171-salman-khans-horoscope-analysis-and-predictions.jpg",
+      image:
+        "https://wpcontent.anytimeastro.com/blog_anytimeastro/blogimages/1394/3171-salman-khans-horoscope-analysis-and-predictions.jpg",
       description: t.blogdesc3,
       badge: t.blogbage3,
     },
@@ -91,7 +98,6 @@ const BlogSection = () => {
     ],
   };
 
-
   // if (isLoading) return <p>Loading blogs...</p>;
   // if (error) return <p>Error: {error.message}</p>;
 
@@ -100,11 +106,9 @@ const BlogSection = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.blog1}</h2>
+          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text">{t.blog1}</h2>
           <div className="w-24 h-1 bg-red-500 mx-auto mb-6"></div>
-          <p className="text-gray-600 max-w-3xl mx-auto">
-            {t.blogdec1}
-          </p>
+          <p className="text-gray-600 max-w-3xl mx-auto">{t.blogdec1}</p>
         </div>
 
         {/* Blog Posts Slider */}
@@ -121,7 +125,6 @@ const BlogSection = () => {
                       className="w-full h-64 object-contain"
                     />
                   </div>
-
 
                   {/* Content */}
                   <div className="p-6 text-center min-h-24">
@@ -162,4 +165,3 @@ const BlogSection = () => {
 };
 
 export default BlogSection;
-

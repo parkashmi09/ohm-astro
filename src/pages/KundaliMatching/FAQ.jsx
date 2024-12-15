@@ -43,7 +43,7 @@ const FAQ = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-2xl font-bold text-center mb-8">
+      <h1 className="text-xl md:text-2xl lg:text-3xl text-center font-bold bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text  mb-8">
         FREQUENTLY ASKED QUESTIONS
         <div className="w-16 h-1 bg-red-500 mx-auto mt-2"></div>
       </h1>

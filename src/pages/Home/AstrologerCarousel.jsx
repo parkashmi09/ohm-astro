@@ -42,10 +42,16 @@ const AstrologerCarousel3D = () => {
 
   console.log("this top rated astrologers data", data);
 
-  if (isLoading) return <p>Loading top-rated astrologers...</p>;
+  if (isLoading)
+    return (
+      <div className="text-center p-8">
+        {/* Spinner */}
+        <div className="inline-block w-16 h-16 border-4 border-t-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+        <p className="mt-4">Loading top-rated astrologers...</p>
+      </div>
+    );
   if (error)
     return <p>Error fetching top-rated astrologers: {error.message}</p>;
-
 
   const settings = {
     dots: false,
@@ -86,7 +92,7 @@ const AstrologerCarousel3D = () => {
     <div className="bg-pink-50 p-6 perspective-1000">
       <div className="relative px-8 max-w-7xl mx-auto">
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
+          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text">
             {t.ourAstrologers}
           </h2>
           <div className="w-48 h-0.5 bg-pink-500 mx-auto mb-4"></div>
@@ -104,7 +110,7 @@ const AstrologerCarousel3D = () => {
             ? "scale-100 opacity-100 z-10"
             : "scale-75 opacity-70 z-0"
         }
-      `} 
+      `}
             >
               <div
                 className="

@@ -10,7 +10,7 @@ const MarriageBanner = () => {
       <div className="relative max-w-6xl mx-auto h-full flex items-center">
         {/* Text content */}
         <div className="w-1/2 text-center ">
-          <h1 className="text-4xl font-bold text-gray-800 mb-6">
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-6">
             ARE YOU <span className="text-red-500">GETTING MARRIED</span> TO THE
             <br />
             RIGHT PERSON?

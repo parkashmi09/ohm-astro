@@ -70,7 +70,7 @@ const CelebrityTestimonialGallery = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl font-extrabold  text-black  mb-4">
+          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text">
             Trusted by Celebrities
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">

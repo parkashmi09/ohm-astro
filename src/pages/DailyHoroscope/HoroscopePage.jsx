@@ -1,6 +1,8 @@
+// src/pages/HoroscopePage.js
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { zodiacData, getSignData, getHoroscope } from '../../components/content/zodiacData ';
+import { zodiacData, getHoroscope } from '../../components/content/zodiacData ';
+import SignsNavigation from './SignsNavigation';  // Import the new component
 
 const HoroscopePage = () => {
   const { sign } = useParams();
@@ -70,27 +72,10 @@ const HoroscopePage = () => {
   return (
     <div className="w-full max-w-6xl mx-auto p-4">
       {/* Signs Navigation */}
-      <div className="w-full overflow-x-auto mb-8 no-scrollbar">
-        <div className="flex space-x-6 p-2">
-          {Object.entries(zodiacData).map(([signName, signData]) => (
-            <button
-              key={signData.id}
-              onClick={() => handleSignChange(signName)}
-              className={`flex flex-col items-center min-w-[80px] transition-colors duration-200  ${
-                activeSign === signName ? 'text-pink-500' : 'text-gray-600 hover:text-pink-400'
-              }`}
-            >
-              <img
-                src={signData.image}
-                alt={signName}
-                className="w-12 h-12 mb-2"
-              />
-              <span className="text-sm font-medium">{signName}</span>
-              <span className="text-xs text-gray-500">{signData.dates}</span>
-            </button>
-          ))}
-        </div>
-      </div>
+      <SignsNavigation 
+        activeSign={activeSign} 
+        handleSignChange={handleSignChange} 
+      />
 
       {/* Content Section */}
       <div className="bg-white rounded-lg shadow-lg p-6">

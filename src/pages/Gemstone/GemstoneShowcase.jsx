@@ -6,8 +6,9 @@ import GemstoneShowcas from './GemstoneShowcas';
 import GemstonesFAQ from './GemstonesFAQ';
 import { useSelector } from 'react-redux';
 import translations from '../../components/translations/translations';
-import { useQuery } from "@tanstack/react-query";
-import { fetchGemstones } from "../../api/apiCalls";
+import { useQuery,useMutation } from "@tanstack/react-query";
+import { fetchGemstones,postGemstone } from "../../api/apiCalls";
+
 // Product data
 // const products = [
 //   {
@@ -53,42 +54,49 @@ import { fetchGemstones } from "../../api/apiCalls";
 // ];
 
 // Form Modal Component
-const ProductInquiryModal = ({ isOpen, onClose, product }) => {
+
+ // Ensure this file exports the postGemstone function
+
+const ProductInquiryModal = ({ isOpen, onClose, product, token }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    mobile: '',
-    email: '',
-    address: '',
     message: ''
   });
+
+  console.log(formData);
 
   const [errors, setErrors] = useState({});
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.mobile.trim()) {
-      newErrors.mobile = 'Mobile number is required';
-    } else if (!/^\d{10}$/.test(formData.mobile)) {
-      newErrors.mobile = 'Enter valid 10-digit mobile number';
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
     }
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Enter valid email address';
-    }
-    if (!formData.address.trim()) newErrors.address = 'Address is required';
     return newErrors;
   };
+
+  const mutation = useMutation({
+    mutationFn: postGemstone,
+    onSuccess: () => {
+      alert('Thank you for your inquiry. We will contact you shortly!');
+      onClose();
+    },
+    onError: (error) => {
+      console.error('Error submitting inquiry:', error);
+      alert('Failed to submit the inquiry. Please try again later.');
+    },
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = validate();
     if (Object.keys(newErrors).length === 0) {
-      // Handle form submission
-      console.log('Form submitted:', formData);
-      alert('Thank you for your inquiry. We will contact you shortly!');
-      onClose();
+      const payload = {
+        gemstoneId: product._id,
+        queryType: 'purchase',
+        message: formData.message
+      };
+
+      mutation.mutate(payload);
     } else {
       setErrors(newErrors);
     }
@@ -96,15 +104,16 @@ const ProductInquiryModal = ({ isOpen, onClose, product }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
+
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ''
+        [name]: '',
       }));
     }
   };
@@ -118,11 +127,11 @@ const ProductInquiryModal = ({ isOpen, onClose, product }) => {
           onClick={onClose}
           className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
         >
-          <X className="w-6 h-6" />
+          {/* Add your close button icon */}
         </button>
 
         <div className="p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Product Inquiry</h2>
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text  mb-6">Product Inquiry</h2>
           
           {/* Product Summary */}
           <div className="flex gap-4 mb-6 p-4 bg-gradient-to-r from-amber-200 to-yellow-500 rounded-lg">
@@ -146,92 +155,20 @@ const ProductInquiryModal = ({ isOpen, onClose, product }) => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Full Name *
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none ${
-                  errors.name ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="Enter your full name"
-              />
-              {errors.name && (
-                <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Mobile Number *
-              </label>
-              <input
-                type="tel"
-                name="mobile"
-                value={formData.mobile}
-                onChange={handleChange}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none ${
-                  errors.mobile ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="Enter your mobile number"
-              />
-              {errors.mobile && (
-                <p className="text-red-500 text-sm mt-1">{errors.mobile}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address *
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none ${
-                  errors.email ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="Enter your email address"
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Delivery Address *
-              </label>
-              <textarea
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                rows="3"
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none ${
-                  errors.address ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="Enter your delivery address"
-              />
-              {errors.address && (
-                <p className="text-red-500 text-sm mt-1">{errors.address}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Additional Message
+                Message *
               </label>
               <textarea
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                rows="3"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
-                placeholder="Any additional information or questions?"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none ${
+                  errors.message ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="Enter your message"
               />
+              {errors.message && (
+                <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+              )}
             </div>
 
             <button
@@ -246,6 +183,8 @@ const ProductInquiryModal = ({ isOpen, onClose, product }) => {
     </div>
   );
 };
+
+
 
 // Updated Product Card Component
 
@@ -380,7 +319,7 @@ const BestSellers = () => {
   if (error) return <p>Error: {error.message}</p>;
   return (
     <div className="py-16 px-4 max-w-7xl mx-auto">
-      <h2 className="text-2xl font-bold text-center mb-12">
+      <h2 className="text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text  text-center mb-12">
         {t.OurBestSellers}
         <div className="w-16 h-1 bg-red-500 mx-auto mt-2"></div>
       </h2>

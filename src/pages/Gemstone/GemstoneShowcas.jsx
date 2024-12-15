@@ -69,7 +69,7 @@ const GemstoneShowcas = () => {
       <div className="bg-gradient-to-b from-purple-950 to-pink-50">
         {/* Gemstones Section */}
         <div className="max-w-6xl mx-auto py-16 px-4">
-          <h2 className="text-center text-2xl font-bold mb-12">
+          <h2 className="text-center  text-xl md:text-2xl lg:text-3xl  bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-2 font-bold mb-12">
             {t.SELECTFROM}
             <div className="w-64 h-1 bg-rose-500 mx-auto mt-2"></div>
           </h2>

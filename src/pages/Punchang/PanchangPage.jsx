@@ -255,7 +255,7 @@ const PanchangPage = () => {
         </div>
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold mb-2">{t.todayPanchang}</h1>
+          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-amber-500 to-pink-600 text-transparent bg-clip-text">{t.todayPanchang}</h1>
           <p className="text-gray-600">
             Aaj ka Panchang | {selectedLocation}, {selectedDate}
           </p>
@@ -296,9 +296,9 @@ const PanchangPage = () => {
         {/* Rest of the code remains the same... */}
         {/* Title Section */}
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold">
+          <h2 className="text-4xl font-bold">
           {t.todayPanchang}{" "}
-            <span className="text-rose-500">(AAJ KA PANCHANG)</span>
+            <span className="text-4xl font-bold mb-4 bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text">(AAJ KA PANCHANG)</span>
           </h2>
           <p className="mt-4 text-gray-600 max-w-4xl mx-auto">
             Panchang is the Hindu calendar followed by Vedic astrology, which
@@ -351,7 +351,7 @@ const PanchangPage = () => {
           <div className="grid md:grid-cols-2 gap-6 p-4 ">
             <div className="bg-white rounded-lg shadow-md ">
               <div className="p-6">
-                <h3 className="text-xl font-bold text-center text-rose-500 mb-4">
+                <h3 className="text-xl font-bold text-center bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-4">
                 {t.Panchang}
                 </h3>
                 <div className="space-y-4">
@@ -370,7 +370,7 @@ const PanchangPage = () => {
 
             <div className="bg-white rounded-lg shadow-md">
               <div className="p-6">
-                <h3 className="text-xl font-bold text-center text-rose-500 mb-4">
+                <h3 className="text-xl font-bold text-center bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-4">
                   {t.AdditionalInfo}
                 </h3>
                 <div className="space-y-4">
@@ -389,7 +389,7 @@ const PanchangPage = () => {
 
             <div className="bg-white rounded-lg shadow-md">
               <div className="p-6">
-                <h3 className="text-xl font-bold text-center text-rose-500 mb-4">
+                <h3 className="text-xl font-bold text-center bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-4">
                   {t.InauspiciousTime}
                 </h3>
                 <div className="space-y-4">
@@ -408,7 +408,7 @@ const PanchangPage = () => {
 
             <div className="bg-white rounded-lg shadow-md">
               <div className="p-6">
-                <h3 className="text-xl font-bold text-center text-rose-500 mb-4">
+                <h3 className="text-xl font-bold text-center bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-4">
                   {t.AuspiciousTime}
                 </h3>
                 <div className="space-y-4">
@@ -427,7 +427,7 @@ const PanchangPage = () => {
           </div>
           <AstrologicalCharts />
           <div className="max-w-6xl mx-auto p-6">
-            <h2 className="text-2xl font-bold text-center text-red-500 mb-6">
+            <h2 className="text-2xl font-bold text-center bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-6">
               {t.PlanetaryPositionAtSunrise}
             </h2>
 

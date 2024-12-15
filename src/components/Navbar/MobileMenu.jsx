@@ -56,14 +56,6 @@ const menuData = {
       ],
     },
   ],
-  store: [
-    { title: "Blue Sapphire", link: "/blue-sapphire" },
-    { title: "Blood Blue Sapphire", link: "/blood-blue-sapphire" },
-    { title: "Yellow Sapphire", link: "/yellow-sapphire" },
-    { title: "Emerald", link: "/emerald" },
-    { title: "Ruby", link: "/ruby" },
-    { title: "More Categories", link: "/more-categories" },
-  ],
 };
 
 

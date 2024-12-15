@@ -1,7 +1,7 @@
 import { Calendar } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import VedicAstrologersSection from "../ConsultWithTopVedicAstrologers";
-import HoroscopeBenefits from "./HoroscopeBenefits";
+import Monthlybenift from "./Mothlybenifit";
 import { useSelector } from "react-redux";
 import translations from "../../components/translations/translations";
 
@@ -23,7 +23,7 @@ const Breadcrumb = () => {
           {t.Horoscope}
         </Link>
         <span>›</span>
-        <span>{t.DailyHoroscope}</span>
+        <span>{t.MonthlyHoroscope}</span>
       </div>
     </div>
   );
@@ -38,7 +38,7 @@ const HoroscopeHeader = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">
-            {t.FreeDailyHoroscope}
+            {t.MonthlyHoroscope}
             <div className="w-16 h-1 bg-red-500 mt-2"></div>
           </h1>
           <Calendar className="w-12 h-12 text-red-500" />
@@ -163,7 +163,7 @@ const TodaysHoroscope = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
       <h2 className="text-center text-3xl font-bold mb-4">
-        {t.Todays} <span className="text-red-500">{t.Horoscope}</span>
+        {t.MonthlyHoroscope}   <span className="text-red-500">{t.Horoscope}</span>
       </h2>
       <p className="text-center text-gray-700 mb-12 max-w-3xl mx-auto">
         {t.Descriptions}
@@ -195,16 +195,16 @@ const TodaysHoroscope = () => {
 };
 
 // Main Component
-const DailyHoroscope = () => {
+const YearlyHoroscope = () => {
   return (
     <div>
       <Breadcrumb />
       <HoroscopeHeader />
       <TodaysHoroscope />
       <VedicAstrologersSection />
-      <HoroscopeBenefits />
+      <Monthlybenift />
     </div>
   );
 };
 
-export default DailyHoroscope;
+export default YearlyHoroscope;

@@ -1,7 +1,7 @@
 import KundaliMatchingForm from "./KundaliMatchingForm";
 import ConsultWithTopVedicAstrologers from "../ConsultWithTopVedicAstrologers";
-import { useSelector } from 'react-redux';
-import translations from '../../components/translations/translations';
+import { useSelector } from "react-redux";
+import translations from "../../components/translations/translations";
 import {
   kootaData,
   KundliMilan,
@@ -18,13 +18,13 @@ const Breadcrumb = () => {
   const t = translations[language];
   return (
     <div className="bg-red-500 text-white py-3 px-4">
-      <div className="max-w-6xl mx-auto flex items-center gap-2 text-sm">
+      <div className="max-w-7xl mx-auto flex items-center gap-2 text-sm">
         <Link to="/" className="hover:underline">
           {t.Home}
-        </Link> 
+        </Link>
         <span>›</span>
         <Link to="/astrology" className="hover:underline">
-        {t.ASTROLOGYs}
+          {t.ASTROLOGYs}
         </Link>
         <span>›</span>
         <span>{t.kundaliMatching}</span>
@@ -38,27 +38,63 @@ const KundaliMatching = () => {
   return (
     <div>
       <Breadcrumb />
+      {/* Header Section */}
+      <div className=" flex justify-between items-center mb-8 bg-red-100 p-10">
+        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text">{t.kundaliMatching}</h1>
+        <div className="w-16 h-16">
+          <svg viewBox="0 0 100 100" className="fill-current text-pink-500">
+            {/* Circle representing planets in a kundali */}
+            <circle cx="30" cy="30" r="12" />
+            <circle cx="70" cy="30" r="12" />
+            <circle cx="30" cy="70" r="12" />
+            <circle cx="70" cy="70" r="12" />
+
+            {/* Connecting lines representing relationships between planets */}
+            <path
+              d="M30 30 L70 30"
+              strokeWidth="2"
+              stroke="currentColor"
+              fill="none"
+            />
+            <path
+              d="M30 30 L30 70"
+              strokeWidth="2"
+              stroke="currentColor"
+              fill="none"
+            />
+            <path
+              d="M30 70 L70 70"
+              strokeWidth="2"
+              stroke="currentColor"
+              fill="none"
+            />
+            <path
+              d="M70 30 L70 70"
+              strokeWidth="2"
+              stroke="currentColor"
+              fill="none"
+            />
+
+            {/* Additional decorative lines for astrological significance */}
+            <path
+              d="M50 10 L50 90"
+              strokeWidth="2"
+              stroke="currentColor"
+              fill="none"
+            />
+            <path
+              d="M10 50 L90 50"
+              strokeWidth="2"
+              stroke="currentColor"
+              fill="none"
+            />
+          </svg>
+        </div>
+      </div>
       <div className="min-h-screen bg-white py-8 px-4">
         <div className="max-w-6xl mx-auto">
-          {/* Header Section */}
-          <div className="flex justify-between items-center mb-8 bg-red-100 p-8">
-            <h1 className="text-2xl font-semibold">{t.kundaliMatching}</h1>
-            <div className="w-16 h-16">
-              <svg viewBox="0 0 100 100" className="fill-current text-pink-500">
-                <circle cx="40" cy="50" r="25" />
-                <circle cx="60" cy="50" r="25" />
-                <path
-                  d="M50 20 L65 5 L80 20"
-                  strokeWidth="5"
-                  stroke="currentColor"
-                  fill="none"
-                />
-              </svg>
-            </div>
-          </div>
-
           {/* Main Title */}
-          <h2 className="text-center text-3xl font-bold mb-8">
+          <h2 className="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text">
             KUNDALI MATCHING | KUNDALI MATCH FOR MARRIAGE | HOROSCOPE MATCHING
           </h2>
 
@@ -95,7 +131,7 @@ const KundaliMatching = () => {
           </div>
 
           <div>
-            <h2 className="text-center text-3xl font-bold mb-8">
+            <h2 className="text-center text-3xl font-bold mb-8  bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text">
               Enter Details to Get Free Online Kundali Matching Report For
               Marriage
             </h2>
@@ -118,7 +154,7 @@ const KundaliMatching = () => {
           {/* Form Section */}
           <div className=" rounded-lg shadow-md">
             <div className="p-2 border-b">
-              <h2 className="text-center text-lg font-semibold text-red-500 mb-8">
+              <h2 className="text-center text-lg  font-bold mb-4 bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text">
                 {t.EnterDetails}
               </h2>
             </div>
@@ -127,8 +163,8 @@ const KundaliMatching = () => {
 
           {/* Description */}
           <div className="mt-8 text-center text-gray-700 space-y-4">
-            <h2 className="text-center text-lg font-semibold text-red-500 mb-8">
-             {t.KundaliMatchingAnalysis}
+            <h2 className="text-center text-xl font-bold  mb-4 bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text">
+              {t.KundaliMatchingAnalysis}
             </h2>
             <p className="text-lg text-center">
               Got the Patrika Matching analysis, but not sure about what it
@@ -149,7 +185,7 @@ const KundaliMatching = () => {
             astrologers.
           </p>
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-2 mt-4 uppercase">
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mt-6 uppercase">
               {t.GunaMilan}
             </h2>
             <div className="w-24 h-1 bg-red-500 mx-auto"></div>
@@ -205,7 +241,7 @@ const KundaliMatching = () => {
 
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-2 uppercase">
+          <h2 className="text-2xl lg:text-4xl font-bold  bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-2 uppercase">
             {t.ImportanceOfKundliMilan}
           </h2>
           <div className="w-32 h-1 bg-red-500 mx-auto"></div>
@@ -260,7 +296,7 @@ const KundaliMatching = () => {
       <div className="max-w-6xl mx-auto p-6 space-y-12">
         {/* Process Section */}
         <div>
-          <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
+          <h1 className="text-3xl font-bold text-center  bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-8">
             {t.OnlineKundaliMatchingProcess}
           </h1>
           <p className="text-gray-700 mb-6">
@@ -280,7 +316,7 @@ const KundaliMatching = () => {
 
         {/* Benefits Section */}
         <div>
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+          <h2 className="text-3xl font-bold text-center  bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text mb-8">
             BENEFITS OF ONLINE KUNDALI MATCHING OR ONLINE HOROSCOPE MATCHING
           </h2>
           <p className="text-gray-700 mb-4">
@@ -307,9 +343,9 @@ const KundaliMatching = () => {
         ></div> */}
       </div>
 
-      <MarriageBanner/>
-      <KundaliInfo/>
-      <FAQ/>
+      <MarriageBanner />
+      <KundaliInfo />
+      <FAQ />
     </div>
   );
 };

@@ -14,7 +14,9 @@ export default {
         'rotate-slow': 'rotate 20s linear infinite',
         'pulse-slow': 'pulse 4s infinite',
         'bounce-slow': 'bounce 3s infinite',
-        'gradient-text': 'gradient-text 5s ease infinite'
+        'gradient-text': 'gradient-text 5s ease infinite',
+         'spinSlow': "spin 3s linear infinite", // Slow spinner
+        
       },
       keyframes: {
         twinkle: {

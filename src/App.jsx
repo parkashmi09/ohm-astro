@@ -46,13 +46,15 @@ import HoroscopePage from "./pages/DailyHoroscope/HoroscopePage";
 import UserProfileDropdown from "./components/Navbar/UserProfileDropdown";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MonthlyHoroscope from "./pages/DailyHoroscope/YearlyHoroscope";
+import YearlyHoroscope from "./pages/DailyHoroscope/MonthlyHoroscope";
+import Horoscope from "./pages/DailyHoroscope/Horoscope";
 function App() {
   return (
     <Provider store={store}>
       <ToastContainer />
       <Router>
         <Routes>
-        
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/AstrologerListing" element={<AstrologerListing />} />
@@ -97,12 +99,17 @@ function App() {
             {/* Add more routes as needed */}
 
             {/* Catch-all route for get-advice */}
-        <Route path="/get-advice" element={<GetAdviceOn />} />
-        <Route path="/get-advice/:category" element={<GetAdviceOn />} />
+            <Route path="/get-advice" element={<GetAdviceOn />} />
+            <Route path="/get-advice/:category" element={<GetAdviceOn />} />
 
-    
-        <Route path="/live/:id" element={<LiveStreamingPage />} />
-        <Route path="/profile" element={<UserProfileDropdown />} />
+            <Route path="/live/:id" element={<LiveStreamingPage />} />
+            <Route path="/profile" element={<UserProfileDropdown />} />
+
+            <Route path="/yearly-horoscope" element={<MonthlyHoroscope />} />
+            <Route path="/monthly-horoscope" element={<YearlyHoroscope />} />
+            <Route path="/horoscope" element={<Horoscope />} />
+            
+            
           </Route>
         </Routes>
       </Router>

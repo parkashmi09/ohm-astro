@@ -40,7 +40,7 @@ const AsSeenOn = () => {
       <div className="max-w-7xl mx-auto">
         {/* Heading */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text">
          {t.ASSEEN}
           </h2>
           <div className="w-24 h-1 bg-red-500 mx-auto"></div>

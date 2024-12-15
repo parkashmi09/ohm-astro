@@ -34,7 +34,14 @@ const CustomerStories = () => {
 
   console.log("this top rated astrologers data", data);
 
-  if (isLoading) return <p>Loading top-rated astrologers...</p>;
+  if (isLoading)
+    return (
+      <div className="text-center p-8">
+        {/* Spinner */}
+        <div className="inline-block w-16 h-16 border-4 border-t-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+        <p className="mt-4">Loading top-rated astrologers...</p>
+      </div>
+    );
   if (error)
     return <p>Error fetching top-rated astrologers: {error.message}</p>;
 
@@ -66,7 +73,7 @@ const CustomerStories = () => {
     <div className="bg-red-50">
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">{t.Customer}</h2>
+          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text">{t.Customer}</h2>
           <div className="flex justify-center items-center">
             <div className="h-1 w-24 bg-red-500"></div>
           </div>
@@ -91,14 +98,20 @@ const CustomerStories = () => {
                         </span>
                       ))}
                     </div>
-                    <h3 className="text-xl font-semibold mb-1">{astrologer.name}</h3>
+                    <h3 className="text-xl font-semibold mb-1">
+                      {astrologer.name}
+                    </h3>
                     {astrologer.role && (
                       <p className="text-gray-600 mb-1">{astrologer.role}</p>
                     )}
                     {astrologer.location && (
-                      <p className="text-gray-600 mb-4">{astrologer.location}</p>
+                      <p className="text-gray-600 mb-4">
+                        {astrologer.location}
+                      </p>
                     )}
-                    <p className="text-gray-700 text-center">{astrologer.bio.slice(0, 100)}</p>
+                    <p className="text-gray-700 text-center">
+                      {astrologer.bio.slice(0, 100)}
+                    </p>
                   </div>
                 </div>
               </div>

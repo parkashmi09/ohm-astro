@@ -22,67 +22,142 @@ const Modal = ({ isOpen, onClose, children }) => {
 };
 
 // Call Modal Component
-const CallIntakeForm = ({ isOpen, onClose, astrologer }) => {
+
+const CallIntakeForm = ({ isOpen, onClose, }) => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fname: "",
+    lname: "",
     gender: "",
-    dateOfBirth: "",
-    timeOfBirth: "",
-    placeOfBirth: "",
+    dob: "",
+    dot: "",
+    birthPlace: "",
     maritalStatus: "",
-    topicOfConcern: "",
-    mobileNumber: "",
-    type:"call",
+    reason: "",
+    mobile: "",
+    type: "call",
   });
 
-  // Mutation for adding enquiry
+
+  console.log("formData", formData);
+
+  const [errors, setErrors] = useState({});
+
   const mutation = useMutation({
-    mutationFn: addEnquiry, // Function to execute
+    mutationFn: addEnquiry,
     onSuccess: (data) => {
       toast.success("Enquiry submitted successfully!", { duration: 3000 });
       console.log("Enquiry added successfully:", data);
-      onClose(); // Close the modal on success
+      onClose();
     },
     onError: (error) => {
-      toast.error("There was an error submitting the enquiry. Please try again.", {
+      toast.error(error.message || "There was an error submitting the enquiry. Please try again.", {
         duration: 4000,
       });
       console.error("Error submitting enquiry:", error);
     },
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const validateForm = () => {
+    const newErrors = {};
+    
+    // Required field validation
+    if (!formData.fname.trim()) newErrors.fname = "First name is required";
+    if (!formData.lname.trim()) newErrors.lname = "Last name is required";
+    if (!formData.gender) newErrors.gender = "Gender is required";
+    if (!formData.dob) newErrors.dob = "Date of birth is required";
+    if (!formData.birthPlace.trim()) newErrors.birthPlace = "Place of birth is required";
+    if (!formData.maritalStatus) newErrors.maritalStatus = "Marital status is required";
+    if (!formData.mobile.trim()) newErrors.mobile = "Mobile number is required";
+    if (!formData.reason.trim()) newErrors.reason = "Topic of concern is required";
 
-    // Validate required fields
-    if (
-      !formData.firstName ||
-      !formData.gender ||
-      !formData.dateOfBirth ||
-      !formData.placeOfBirth ||
-      !formData.maritalStatus ||
-      !formData.mobileNumber
-    ) {
-      toast.error("Please fill in all required fields.", { duration: 3000 });
-      return;
+    // Mobile number validation
+    if (formData.mobile && !/^\d{10}$/.test(formData.mobile.trim())) {
+      newErrors.mobile = "Please enter a valid 10-digit mobile number";
     }
 
-    // Trigger the mutation
-    mutation.mutate({
-      ...formData,
-      astrologerId: astrologer?.id, // Include astrologer ID if applicable
-    });
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (validateForm()) {
+      mutation.mutate(formData);
+    } else {
+      toast.error("Please fill in all required fields correctly.", { duration: 3000 });
+      const firstError = document.querySelector(".error-field");
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormData({ ...formData, [field]: value });
+    if (errors[field]) {
+      setErrors({ ...errors, [field]: null });
+    }
+  };
+
+  const InputField = ({ label, name, type = "text", required = false, options, value }) => {
+    const hasError = errors[name];
+    const inputClasses = `w-full p-2 border rounded ${
+      hasError ? 'border-red-500 bg-red-50' : 'border-gray-300'
+    } focus:outline-none focus:ring-2 focus:ring-yellow-400`;
+
+    return (
+      <div className={`${hasError ? 'error-field' : ''}`}>
+        <label className="block text-sm font-medium mb-1">
+          {label} {required && <span className="text-red-500">*</span>}
+        </label>
+        {type === "select" ? (
+          <select
+            value={value}
+            onChange={(e) => handleInputChange(name, e.target.value)}
+            className={inputClasses}
+          >
+            <option value="">--Select--</option>
+            {options.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <input
+            type={type}
+            value={value}
+            onChange={(e) => handleInputChange(name, e.target.value)}
+            className={inputClasses}
+          />
+        )}
+        {hasError && <p className="text-red-500 text-sm mt-1">{hasError}</p>}
+      </div>
+    );
+  };
+
+  // Updated enum values to match backend schema
+  const genderOptions = [
+    { value: "Male", label: "Male" },
+    { value: "Female", label: "Female" },
+    { value: "Other", label: "Other" }
+  ];
+
+  const maritalStatusOptions = [
+    { value: "Single", label: "Single" },
+    { value: "Married", label: "Married" },
+    { value: "Divorced", label: "Divorced" },
+    { value: "Widowed", label: "Widowed" },
+    { value: "Separated", label: "Separated" }
+  ];
 
   return (
     <>
-      {/* Toaster Component */}
       <Toaster position="top-right" reverseOrder={false} />
 
       <Modal isOpen={isOpen} onClose={onClose}>
-        <div className="p-6">
-          {/* Header */}
+        <div className="p-6 max-h-[90vh] overflow-y-auto">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">Call Intake Form</h2>
             <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
@@ -90,132 +165,109 @@ const CallIntakeForm = ({ isOpen, onClose, astrologer }) => {
             </button>
           </div>
 
-          {/* Free Session Banner */}
           <div className="bg-yellow-100 p-4 rounded-lg mb-4">
             <p>Yay! You are eligible for the first 3-minute free session.</p>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* First Name and Last Name */}
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">First Name *</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full p-2 border rounded"
-                  value={formData.firstName}
-                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Last Name</label>
-                <input
-                  type="text"
-                  className="w-full p-2 border rounded"
-                  value={formData.lastName}
-                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                />
-              </div>
-            </div>
-
-            {/* Gender */}
-            <div>
-              <label className="block text-sm font-medium mb-1">Gender *</label>
-              <select
+              <InputField
+                label="First Name"
+                name="fname"
                 required
-                className="w-full p-2 border rounded"
-                value={formData.gender}
-                onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-              >
-                <option value="">--Select--</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            {/* Date of Birth and Time of Birth */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">Date of Birth *</label>
-                <input
-                  type="date"
-                  required
-                  className="w-full p-2 border rounded"
-                  value={formData.dateOfBirth}
-                  onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Time of Birth</label>
-                <input
-                  type="time"
-                  className="w-full p-2 border rounded"
-                  value={formData.timeOfBirth}
-                  onChange={(e) => setFormData({ ...formData, timeOfBirth: e.target.value })}
-                />
-              </div>
-            </div>
-
-            {/* Place of Birth */}
-            <div>
-              <label className="block text-sm font-medium mb-1">Place of Birth *</label>
-              <input
-                type="text"
+                value={formData.fname}
+              />
+              <InputField
+                label="Last Name"
+                name="lname"
                 required
-                className="w-full p-2 border rounded"
-                value={formData.placeOfBirth}
-                onChange={(e) => setFormData({ ...formData, placeOfBirth: e.target.value })}
+                value={formData.lname}
               />
             </div>
 
-            {/* Marital Status */}
-            <div>
-              <label className="block text-sm font-medium mb-1">Marital Status *</label>
-              <select
+            <InputField
+              label="Gender"
+              name="gender"
+              type="select"
+              required
+              value={formData.gender}
+              options={genderOptions}
+            />
+
+            <div className="grid grid-cols-2 gap-4">
+              <InputField
+                label="Date of Birth"
+                name="dob"
+                type="date"
                 required
-                className="w-full p-2 border rounded"
-                value={formData.maritalStatus}
-                onChange={(e) => setFormData({ ...formData, maritalStatus: e.target.value })}
-              >
-                <option value="">--Select--</option>
-                <option value="single">Single</option>
-                <option value="married">Married</option>
-                <option value="divorced">Divorced</option>
-                <option value="widowed">Widowed</option>
-                <option value="widowed">Separated</option>
-              </select>
+                value={formData.dob}
+              />
+              <InputField
+                label="Time of Birth"
+                name="dot"
+                type="time"
+                value={formData.dot}
+              />
             </div>
 
-            {/* Mobile Number */}
+            <InputField
+              label="Place of Birth"
+              name="birthPlace"
+              required
+              value={formData.birthPlace}
+            />
+
+            <InputField
+              label="Marital Status"
+              name="maritalStatus"
+              type="select"
+              required
+              value={formData.maritalStatus}
+              options={maritalStatusOptions}
+            />
+
             <div>
-              <label className="block text-sm font-medium mb-1">Mobile Number *</label>
+              <label className="block text-sm font-medium mb-1">
+                Mobile Number <span className="text-red-500">*</span>
+              </label>
               <div className="flex">
-                <select className="w-24 p-2 border rounded-l">
+                <select className="w-24 p-2 border rounded-l border-r-0">
                   <option value="+91">+91</option>
                   <option value="+1">+1</option>
                 </select>
                 <input
                   type="tel"
-                  required
-                  className="flex-1 p-2 border rounded-r"
-                  value={formData.mobileNumber}
-                  onChange={(e) => setFormData({ ...formData, mobileNumber: e.target.value })}
+                  value={formData.mobile}
+                  onChange={(e) => handleInputChange('mobile', e.target.value)}
+                  className={`flex-1 p-2 border rounded-r ${
+                    errors.mobile ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                  }`}
                 />
               </div>
+              {errors.mobile && (
+                <p className="text-red-500 text-sm mt-1">{errors.mobile}</p>
+              )}
             </div>
 
-            {/* Submit Button */}
+            <InputField
+              label="Topic of Concern"
+              name="reason"
+              required
+              value={formData.reason}
+            />
+
             <button
               type="submit"
               disabled={mutation.isLoading}
-              className={`w-full text-black font-semibold py-2 px-4 rounded ${
-                mutation.isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-yellow-400 hover:bg-yellow-500"
+              className={`w-full text-black font-semibold py-2 px-4 rounded transition-colors ${
+                mutation.isLoading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-yellow-400 hover:bg-yellow-500"
               }`}
             >
-              {mutation.isLoading ? "Submitting..." : `Start Call with ${astrologer?.name || "Astrologer"}`}
+              {mutation.isLoading 
+                ? "Submitting..." 
+                : `Start Call with `}
             </button>
           </form>
         </div>
@@ -223,6 +275,8 @@ const CallIntakeForm = ({ isOpen, onClose, astrologer }) => {
     </>
   );
 };
+
+;
 
 const AstrologerCard = ({ astrologer }) => {
   const [showCallModal, setShowCallModal] = useState(false);

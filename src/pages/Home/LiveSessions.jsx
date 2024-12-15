@@ -40,7 +40,14 @@ const LiveSessions = () => {
 
   console.log("this fetchastrologers data", data);
 
-  if (isLoading) return <p>Loading blogs...</p>;
+  if (isLoading)
+    return (
+      <div className="text-center p-8">
+        {/* Spinner */}
+        <div className="inline-block w-16 h-16 border-4 border-t-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+        <p className="mt-4">Loading top-rated astrologers...</p>
+      </div>
+    );
   if (error) return <p>Error: {error.message}</p>;
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -115,7 +122,7 @@ const LiveSessions = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-gray-800 mb-4">
+        <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-amber-500 to-pink-500 text-transparent bg-clip-text">
           {t.LIVESESSIONS}
         </h2>
         <div className="flex justify-center items-center">
