@@ -49,11 +49,14 @@ import "react-toastify/dist/ReactToastify.css";
 import MonthlyHoroscope from "./pages/DailyHoroscope/YearlyHoroscope";
 import YearlyHoroscope from "./pages/DailyHoroscope/MonthlyHoroscope";
 import Horoscope from "./pages/DailyHoroscope/Horoscope";
+import ScrollToTop from "./pages/scroolToTop";
 function App() {
+  
   return (
     <Provider store={store}>
       <ToastContainer />
       <Router>
+      <ScrollToTop />
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
