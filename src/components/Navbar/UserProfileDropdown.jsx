@@ -24,16 +24,16 @@ const UserProfileDropdown = () => {
 
   const menuItems = [
     { icon: User, label: t.myAccount, link: "/account" },
-    { icon: Wallet, label: t.myWallet, amount: "₹0", link: "/wallet" },
-    { icon: Package, label: t.myPackages, link: "/packages" },
-    { icon: Heart, label: t.myFavorites, link: "/favorites" },
-    { icon: MessageSquare, label: t.myChats, link: "/chats" },
-    { icon: Phone, label: t.myCalls, link: "/calls" },
-    { icon: Video, label: t.myLiveSession, link: "/live-session" },
-    { icon: Mail, label: t.myMessages, link: "/messages" },
-    { icon: HelpCircle, label: t.myQuestions, link: "/questions" },
-    { icon: User, label: t.myFreeConsultations, link: "/consultations" },
-    { icon: Users, label: t.referAFriend, link: "/refer" },
+    // { icon: Wallet, label: t.myWallet, amount: "₹0", link: "/wallet" },
+    // { icon: Package, label: t.myPackages, link: "/packages" },
+    // { icon: Heart, label: t.myFavorites, link: "/favorites" },
+    { icon: MessageSquare, label: t.myChats, link: "/Astrologchat" },
+    { icon: Phone, label: t.myCalls, link: "/AstrologerListing" },
+    // { icon: Video, label: t.myLiveSession, link: "/live-session" },
+    // { icon: Mail, label: t.myMessages, link: "/messages" },
+    // { icon: HelpCircle, label: t.myQuestions, link: "/questions" },
+    // { icon: User, label: t.myFreeConsultations, link: "/consultations" },
+    // { icon: Users, label: t.referAFriend, link: "/refer" },
     { icon: LogOut, label: t.signOut, action: "logout" },
   ];
 

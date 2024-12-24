@@ -149,9 +149,11 @@ const AstrologerCarousel3D = () => {
                   </div>
                   <h3 className="font-medium text-base md:text-lg mb-1 md:mb-2">{astrologer.name}</h3>
                   <p className="text-md md:text-xl text-gray-700 mb-2">
-                    {astrologer.bio.length > 60
-                      ? `${astrologer.bio.slice(0, 60)}...`
-                      : astrologer.bio}
+                    {astrologer.bio
+                      ? astrologer.bio.length > 60
+                        ? `${astrologer.bio.slice(0, 60)}...`
+                        : astrologer.bio
+                      : "Bio not available"}
                   </p>
                   <div className="text-xs md:text-sm">
                     {t.reviews}: <span className="text-pink-500">{totalReviews}</span>

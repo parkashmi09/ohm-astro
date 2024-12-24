@@ -115,13 +115,13 @@ const AstroServices = () => {
                   </div>
 
                   {service.isNew && (
-                    <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
+                    <span className="absolute -top-1 -right-1 bg-green-500 text-nowrap text-white text-xs px-2 py-0.5 rounded-full">
                       {t.new} {/* Translation key */}
                     </span>
                   )}
                 </div>
 
-                <span className="mt-3 text-sm font-medium text-gray-700 group-hover:text-red-500 transition-colors duration-300">
+                <span className="mt-3 text-sm font-medium text-nowrap text-gray-700 group-hover:text-red-500 transition-colors duration-300">
                   {service.name}
                 </span>
               </Link>

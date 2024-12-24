@@ -58,11 +58,27 @@ export const requestEmailOTP = async ({ email }) => {
 
 // Verify OTP
 export const verifyOTP = async ({ email, otp }) => {
-  const response = await axiosInstance.post(endpoints.verifyOtp, {
-    email,
-    otp
-  });
-  return response.data;
+  try {
+    const response = await axiosInstance.post(endpoints.verifyOtp, {
+      email,
+      otp
+    });
+    
+    // Extract token from nested response data
+    console.log("this is the response",response.data.token);
+
+    const token = response.data?.token ||"token"
+    
+    // Store token in localStorage
+    if (token) {
+      localStorage.setItem('token', token);
+    }
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error verifying OTP:', error);
+    throw error;
+  }
 };
 
 

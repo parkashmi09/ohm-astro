@@ -1,4 +1,3 @@
-
 import { login, logout } from "../../redux/auth/authSlice";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -32,6 +31,10 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logout());
     setIsProfileOpen(false);
+  };
+
+  const toggleLanguage = () => {
+    dispatch(setLanguage(language === "ENG" ? "HIN" : "ENG"));
   };
 
   return (
@@ -68,14 +71,24 @@ const Navbar = () => {
             <span className="font-semibold">{t.chatWithAstrologer}</span>
           </Link>
 
-          <select
-            className="bg-transparent border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-yellow-400"
-            value={language}
-            onChange={(e) => dispatch(setLanguage(e.target.value))}
-          >
-            <option value="ENG">ENG</option>
-            <option value="HIN">हिंदी</option>
-          </select>
+          {/* Language Toggle Switch */}
+          <div className="flex items-center space-x-2">
+            <span className={`text-sm font-medium ${language === "ENG" ? "text-gray-900" : "text-gray-500"}`}>ENG</span>
+            <button
+              onClick={toggleLanguage}
+              className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
+              style={{
+                backgroundColor: language === "HIN" ? "#FCD34D" : "#D1D5DB"
+              }}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  language === "HIN" ? "translate-x-6" : "translate-x-1"
+                }`}
+              />
+            </button>
+            <span className={`text-sm font-medium ${language === "HIN" ? "text-gray-900" : "text-gray-500"}`}>हिंदी</span>
+          </div>
 
           <div className="relative">
             {isAuthenticated ? (
@@ -138,4 +151,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useQuery,useMutation } from "@tanstack/react-query";
 import { fetchastrologers,addEnquiry } from "../api/apiCalls";
@@ -276,6 +275,7 @@ const CallIntakeForm = ({ isOpen, onClose, }) => {
   );
 };
 
+// Update AstrologerCard component for better mobile layout
 const AstrologerCard = ({ astrologer }) => {
   const [showCallModal, setShowCallModal] = useState(false);
 
@@ -290,34 +290,29 @@ const AstrologerCard = ({ astrologer }) => {
   };
 
   return (
-    <div className="flex w-full max-w-md bg-white  rounded-xl shadow-lg border border-red-600 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <div className="flex flex-row w-full bg-white rounded-xl shadow-lg border border-red-600 overflow-hidden hover:shadow-xl transition-shadow duration-300">
       {/* Profile Image Section */}
-      <div className="w-2/5 relative">
+      <div className="w-1/3 md:w-2/5 relative">
         <img
           src={safeAstrologer.profileImage}
           alt={`${safeAstrologer.name} profile`}
-          className="w-full h-full object-cover"
+          className="w-full h-32 md:h-full object-cover"
+          loading="lazy"
         />
-        {/* Rating Badge */}
-        <div className="absolute top-3 left-3 bg-yellow-400 text-xs font-semibold px-2 py-1 rounded-full flex items-center">
-          {safeAstrologer.rating} <Star className="ml-1 w-3 h-3" />
+        <div className="absolute top-2 left-2 bg-yellow-400 text-xs font-semibold px-1.5 py-0.5 rounded-full flex items-center">
+          {safeAstrologer.rating} <Star className="ml-0.5 w-3 h-3" />
         </div>
       </div>
 
       {/* Content Section */}
-      <div className="w-3/5 p-4 flex flex-col justify-between">
-        {/* Header and Name */}
+      <div className="w-2/3 md:w-3/5 p-3 flex flex-col justify-between">
         <div>
-          <h3 className="text-lg font-bold text-gray-900 mb-2">
+          <h3 className="text-base md:text-lg font-bold text-gray-900 mb-1">
             {safeAstrologer.name}
           </h3>
 
-          {/* Specialties */}
-          <div className="mb-3">
-            {/* <h4 className="text-xs font-medium text-gray-500 mb-1 uppercase">
-              Specialties
-            </h4> */}
-            <div className="flex flex-wrap gap-1">
+          <div className="mb-2">
+            <div className="flex flex-wrap gap-1 mb-1">
               {safeAstrologer.specialties.length > 0 ? (
                 safeAstrologer.specialties.slice(0, 3).map((spec) => (
                   <span
@@ -338,39 +333,29 @@ const AstrologerCard = ({ astrologer }) => {
                 </span>
               )}
             </div>
-            <p className="text-sm mx-2 ">
-              Exp: {safeAstrologer.experience} year
-            </p>
-            <p className="text-sm mx-2">Hindi</p>
+            <p className="text-xs md:text-sm">Exp: {safeAstrologer.experience} year • Hindi</p>
           </div>
 
-          {/* Pricing */}
-          <div className="text-lg font-bold text-yellow-600 mb-3">
+          <div className="text-base md:text-lg font-bold text-yellow-600">
             ₹{safeAstrologer.pricing}/Min
           </div>
         </div>
 
-        {/* Action Section */}
-        <div className="flex items-center justify-between">
-          {/* Online Status */}
-          <div className="flex items-center space-x-2">
-            <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-xs text-green-600 font-medium">
-              Online Now
-            </span>
+        <div className="flex items-center justify-between mt-2">
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span className="text-xs text-green-600 font-medium">Online</span>
           </div>
 
-          {/* Call Button */}
           <button
             onClick={() => setShowCallModal(true)}
-            className="flex items-center bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold text-xs px-4 py-2 rounded-lg transition-colors duration-200"
+            className="flex items-center bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold text-xs px-3 py-1.5 rounded-lg"
           >
-            <MessageSquare className="w-4 h-4 text-green-500" /> Chat
+            <MessageSquare className="w-3 h-3 mr-1" /> Chat
           </button>
         </div>
       </div>
 
-      {/* Call Modal */}
       <CallIntakeForm
         isOpen={showCallModal}
         onClose={() => setShowCallModal(false)}
@@ -380,6 +365,48 @@ const AstrologerCard = ({ astrologer }) => {
   );
 };
 
+const SkeletonCard = () => (
+  <div className="flex w-full max-w-md bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden animate-pulse">
+    <div className="w-2/5 relative bg-gray-200">
+      <div className="w-full h-full"></div>
+      <div className="absolute top-3 left-3 bg-gray-300 w-16 h-6 rounded-full"></div>
+    </div>
+    <div className="w-3/5 p-4 flex flex-col justify-between">
+      <div>
+        <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
+        <div className="flex flex-wrap gap-1 mb-3">
+          <div className="h-4 bg-gray-200 rounded w-16"></div>
+          <div className="h-4 bg-gray-200 rounded w-20"></div>
+          <div className="h-4 bg-gray-200 rounded w-14"></div>
+        </div>
+        <div className="h-4 bg-gray-200 rounded w-24 mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded w-20 mb-3"></div>
+        <div className="h-6 bg-gray-200 rounded w-28"></div>
+      </div>
+      <div className="flex items-center justify-between">
+        <div className="h-4 bg-gray-200 rounded w-20"></div>
+        <div className="h-8 bg-gray-200 rounded w-24"></div>
+      </div>
+    </div>
+  </div>
+);
+
+// Add NoResultsFound component
+const NoResultsFound = () => (
+  <div className="col-span-full flex flex-col items-center justify-center py-12 px-4">
+    <div className="text-gray-400 mb-4">
+      <svg className="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </div>
+    <h3 className="text-lg font-medium text-gray-900 mb-1">No results found</h3>
+    <p className="text-gray-500 text-center">
+      Try adjusting your search or filters to find what you're looking for.
+    </p>
+  </div>
+);
+
+// Update the filter logic in AstrologerListing component
 const AstrologerListing = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [specializationFilter, setSpecializationFilter] = useState("All");
@@ -452,18 +479,20 @@ const AstrologerListing = () => {
   const filteredAstrologers = astrologerData?.data
     ? sortAstrologers(
         astrologerData.data.filter((astrologer) => {
+          if (!astrologer) return false;
+
           const matchesSearch =
-            astrologer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            astrologer.specializations.some((spec) =>
-              spec.toLowerCase().includes(searchTerm.toLowerCase())
+            (astrologer?.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (astrologer?.specializations || []).some((spec) =>
+              (spec || '').toLowerCase().includes(searchTerm.toLowerCase())
             ) ||
-            astrologer.language.some((lang) =>
-              lang.toLowerCase().includes(searchTerm.toLowerCase())
+            (astrologer?.language || []).some((lang) =>
+              (lang || '').toLowerCase().includes(searchTerm.toLowerCase())
             );
 
           const matchesSpecialization =
             specializationFilter === "All" ||
-            astrologer.specializations.includes(specializationFilter);
+            (astrologer?.specializations || []).includes(specializationFilter);
 
           return matchesSearch && matchesSpecialization;
         })
@@ -471,45 +500,73 @@ const AstrologerListing = () => {
     : [];
 
   console.log("specializations", astrologerData);
-  if (isLoading)
-    return <p className="text-center w-full">Loading astrologers...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  return (
+  if (isLoading) return (
     <div>
       <nav className="bg-rose-500 text-white p-4">
         <div className="container mx-auto flex items-center gap-2">
-          <span>
-            {" "}
-            <Link to="/"><Home className="w-5 h-5" /></Link> 
-          </span>
-          
-          <span>
-            <span className="font-medium">Chat Astrologers</span>
-          </span>
+          <span><Link to="/"><Home className="w-5 h-5" /></Link></span>
+          <span><span className="font-medium">Chat Astrologers</span></span>
         </div>
       </nav>
-      <div className="bg-yellow-400 p-6 mb-8">
+      <div className="bg-yellow-400 p-6 mb-8 animate-pulse">
         <div className="flex items-center justify-between m-8">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">
+          <div className="space-y-4">
+            <div className="h-8 bg-yellow-300 rounded w-3/4"></div>
+            <div className="h-6 bg-yellow-300 rounded w-2/3"></div>
+            <div className="h-10 bg-white rounded-full w-40"></div>
+          </div>
+          <div className="w-48 h-48 bg-yellow-300 rounded-full"></div>
+        </div>
+      </div>
+      <div className="max-w-6xl mx-auto p-4">
+        <div className="flex gap-4 mb-4">
+          <div className="w-full h-10 bg-gray-200 rounded-md animate-pulse"></div>
+          <div className="w-48 h-10 bg-gray-200 rounded-md animate-pulse"></div>
+          <div className="w-48 h-10 bg-gray-200 rounded-md animate-pulse"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...Array(6)].map((_, index) => (
+            <SkeletonCard key={index} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <nav className="bg-rose-500 text-white p-4 sticky top-0 z-30 shadow-md">
+        <div className="container mx-auto flex items-center gap-2">
+          <Link to="/" className="hover:opacity-80 transition-opacity">
+            <Home className="w-5 h-5" />
+          </Link>
+          <span className="font-medium">Chat Astrologers</span>
+        </div>
+      </nav>
+
+      {/* Hero Section - Better mobile layout */}
+      <div className="bg-yellow-400 p-4 md:p-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 max-w-6xl mx-auto px-2 md:px-4 py-4">
+          <div className="text-center md:text-left space-y-3 w-full md:w-2/3">
+            <h1 className="text-xl md:text-3xl font-bold">
               Need guidance for your life problems?
             </h1>
-            <h2 className="text-2xl">Chat to the best Astrologers in India</h2>
-            <div className="bg-white text-black px-4 py-2 rounded-full inline-block mt-4">
+            <h2 className="text-lg md:text-2xl">Chat to the best Astrologers in India</h2>
+            <div className="bg-white text-black px-4 py-2 rounded-full inline-block text-sm md:text-base">
               First Session FREE
             </div>
           </div>
           <img
             src="https://cdn.anytimeastro.com/dashaspeaks/psychics/13ecd392-f1e7-4047-98ce-76600fe99498.png"
             alt="Astrologer"
-            className="w-48 h-48 object-cover rounded-full"
+            className="w-28 h-28 md:w-48 md:h-48 object-cover rounded-full"
           />
         </div>
       </div>
 
+      {/* Search and Filters - Stack on mobile */}
       <div className="max-w-6xl mx-auto p-4">
-        <div className="flex gap-4 mb-4">
+        <div className="flex flex-col gap-3">
           <input
             type="text"
             placeholder="Search astrologers..."
@@ -517,34 +574,41 @@ const AstrologerListing = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="border border-gray-300 p-2 rounded-md w-full"
           />
-          <select
-            value={specializationFilter}
-            onChange={(e) => setSpecializationFilter(e.target.value)}
-            className="border border-gray-300 p-2 rounded-md"
-          >
-            {specializations.map((spec) => (
-              <option key={spec} value={spec}>
-                {spec}
-              </option>
-            ))}
-          </select>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="border border-gray-300 p-2 rounded-md"
-          >
-            {sortOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <select
+              value={specializationFilter}
+              onChange={(e) => setSpecializationFilter(e.target.value)}
+              className="border border-gray-300 p-2 rounded-md text-sm"
+            >
+              {specializations.map((spec) => (
+                <option key={spec} value={spec}>
+                  {spec}
+                </option>
+              ))}
+            </select>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="border border-gray-300 p-2 rounded-md text-sm"
+            >
+              {sortOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredAstrologers.map((astrologer) => (
-            <AstrologerCard key={astrologer._id} astrologer={astrologer} />
-          ))}
+        {/* Grid - Adjusted spacing */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mt-4">
+          {filteredAstrologers.length > 0 ? (
+            filteredAstrologers.map((astrologer) => (
+              <AstrologerCard key={astrologer._id} astrologer={astrologer} />
+            ))
+          ) : (
+            <NoResultsFound />
+          )}
         </div>
       </div>
     </div>

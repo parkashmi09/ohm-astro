@@ -16,9 +16,15 @@ export default {
         'bounce-slow': 'bounce 3s infinite',
         'gradient-text': 'gradient-text 5s ease infinite',
          'spinSlow': "spin 3s linear infinite", // Slow spinner
+         'spin-slow': 'spin 3s linear infinite',
+         'orbit': 'orbit 4s linear infinite',
         
       },
       keyframes: {
+        orbit: {
+          '0%': { transform: 'rotate(0deg) translateX(3rem) rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg) translateX(3rem) rotate(-360deg)' },
+        },
         twinkle: {
           '0%, 100%': { opacity: 0.7 },
           '50%': { opacity: 0.2 }

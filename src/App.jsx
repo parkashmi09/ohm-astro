@@ -51,6 +51,7 @@ import YearlyHoroscope from "./pages/DailyHoroscope/MonthlyHoroscope";
 import Horoscope from "./pages/DailyHoroscope/Horoscope";
 import ScrollToTop from "./pages/scroolToTop";
 import NotFound from "./pages/NotFound";
+import AccountPage from "./pages/AccountPage";
 function App() {
   
   return (
@@ -112,6 +113,7 @@ function App() {
             <Route path="/yearly-horoscope" element={<MonthlyHoroscope />} />
             <Route path="/monthly-horoscope" element={<YearlyHoroscope />} />
             <Route path="/horoscope" element={<Horoscope />} />
+            <Route path="/account" element={<AccountPage/>} />
 
             <Route path="*" element={<NotFound />} />
             
